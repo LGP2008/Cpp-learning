@@ -133,8 +133,9 @@
     <ClCompile Include="03变量.cpp" />
     <ClCompile Include="04常量.cpp" />
     <ClCompile Include="05标识符命名规则.cpp" />
-    <ClCompile Include="06整型.cpp" />
+    <ClCompile Include="06数据类型-整型.cpp" />
     <ClCompile Include="07sizeof关键字.cpp" />
+    <ClCompile Include="08数据类型-实型（浮点型）.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

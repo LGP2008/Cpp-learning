@@ -33,10 +33,13 @@
     <ClCompile Include="00基础框架.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="06整型.cpp">
+    <ClCompile Include="06数据类型-整型.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="07sizeof关键字.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="08数据类型-实型（浮点型）.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
