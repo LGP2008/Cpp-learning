@@ -1,7 +1,7 @@
 #include<iostream>
 using namespace std;
 
-int main() {
+int main8() {
 
 	//单精度  float
 	//双精度  double

@@ -15,34 +15,37 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="01c++书写helloworld.cpp">
+    <ClCompile Include="001c++书写helloworld.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="02注释.cpp">
+    <ClCompile Include="002注释.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="03变量.cpp">
+    <ClCompile Include="003变量.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="04常量.cpp">
+    <ClCompile Include="004常量.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="05标识符命名规则.cpp">
+    <ClCompile Include="005标识符命名规则.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="00基础框架.cpp">
+    <ClCompile Include="000基础框架.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="06数据类型-整型.cpp">
+    <ClCompile Include="006数据类型-整型.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="07sizeof关键字.cpp">
+    <ClCompile Include="007sizeof关键字.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="08数据类型-实型（浮点型）.cpp">
+    <ClCompile Include="008数据类型-实型（浮点型）.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="09数据类型-字符型.cpp">
+    <ClCompile Include="009数据类型-字符型.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="010数据类型-转义字符.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
