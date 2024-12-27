@@ -42,5 +42,8 @@
     <ClCompile Include="08数据类型-实型（浮点型）.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="09数据类型-字符型.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
