@@ -48,7 +48,7 @@
     <ClCompile Include="010数据类型-转义字符.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="11数据类型-字符串型.cpp">
+    <ClCompile Include="011数据类型-字符串型.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
