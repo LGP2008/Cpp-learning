@@ -139,6 +139,7 @@
     <ClCompile Include="008数据类型-实型（浮点型）.cpp" />
     <ClCompile Include="009数据类型-字符型.cpp" />
     <ClCompile Include="010数据类型-转义字符.cpp" />
+    <ClCompile Include="11数据类型-字符串型.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
