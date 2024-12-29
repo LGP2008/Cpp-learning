@@ -140,6 +140,7 @@
     <ClCompile Include="009数据类型-字符型.cpp" />
     <ClCompile Include="010数据类型-转义字符.cpp" />
     <ClCompile Include="011数据类型-字符串型.cpp" />
+    <ClCompile Include="FileName.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
