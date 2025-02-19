@@ -141,6 +141,7 @@
     <ClCompile Include="010数据类型-转义字符.cpp" />
     <ClCompile Include="011数据类型-字符串型.cpp" />
     <ClCompile Include="012数据类型-布尔类型.cpp" />
+    <ClCompile Include="013数据类型-数据的输入.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
