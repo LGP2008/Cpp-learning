@@ -57,5 +57,8 @@
     <ClCompile Include="013数据类型-数据的输入.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="14运算符-算术运算符加减乘除.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
