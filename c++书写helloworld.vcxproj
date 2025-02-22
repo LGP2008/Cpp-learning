@@ -143,6 +143,7 @@
     <ClCompile Include="012数据类型-布尔类型.cpp" />
     <ClCompile Include="013数据类型-数据的输入.cpp" />
     <ClCompile Include="14运算符-算术运算符加减乘除.cpp" />
+    <ClCompile Include="15算术运算符-取余.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -60,5 +60,8 @@
     <ClCompile Include="14运算符-算术运算符加减乘除.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="15算术运算符-取余.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
