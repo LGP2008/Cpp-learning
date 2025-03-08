@@ -1,7 +1,7 @@
 #include<iostream>
 using namespace std;
 
-int main() {
+int main17() {
 
 //¸³ÖµÔËËã·û
 
