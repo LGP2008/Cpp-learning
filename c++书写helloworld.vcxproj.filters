@@ -69,5 +69,11 @@
     <ClCompile Include="017-运算符-赋值运算符.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="018运算符-比较运算符.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="019运算符-逻辑运算符.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
