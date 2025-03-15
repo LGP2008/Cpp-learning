@@ -148,6 +148,8 @@
     <ClCompile Include="017-运算符-赋值运算符.cpp" />
     <ClCompile Include="018运算符-比较运算符.cpp" />
     <ClCompile Include="019运算符-逻辑运算符.cpp" />
+    <ClCompile Include="020-选择结构-单行语句.cpp" />
+    <ClCompile Include="021-选择结构-多行语句.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

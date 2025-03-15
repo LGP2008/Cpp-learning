@@ -75,5 +75,11 @@
     <ClCompile Include="019运算符-逻辑运算符.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="020-选择结构-单行语句.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="021-选择结构-多行语句.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
