@@ -152,6 +152,8 @@
     <ClCompile Include="021-选择结构-多行if语句.cpp" />
     <ClCompile Include="022选择结构-多条件if语句.cpp" />
     <ClCompile Include="023-选择结构-嵌套if语句.cpp" />
+    <ClCompile Include="024-if练习.cpp" />
+    <ClCompile Include="025-选择结构-三目运算符.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

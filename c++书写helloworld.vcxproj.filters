@@ -87,5 +87,11 @@
     <ClCompile Include="023-选择结构-嵌套if语句.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="024-if练习.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="025-选择结构-三目运算符.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
