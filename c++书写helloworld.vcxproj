@@ -154,6 +154,17 @@
     <ClCompile Include="023-选择结构-嵌套if语句.cpp" />
     <ClCompile Include="024-if练习.cpp" />
     <ClCompile Include="025-选择结构-三目运算符.cpp" />
+    <ClCompile Include="026-switch语句.cpp" />
+    <ClCompile Include="027-whlle循环语句.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="C++学习.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\Downloads\1736256836039.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
