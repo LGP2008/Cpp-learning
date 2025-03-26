@@ -156,6 +156,8 @@
     <ClCompile Include="025-选择结构-三目运算符.cpp" />
     <ClCompile Include="026-switch语句.cpp" />
     <ClCompile Include="027-whlle循环语句.cpp" />
+    <ClCompile Include="028-循环结构练习.cpp" />
+    <ClCompile Include="029-do...while.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h" />
