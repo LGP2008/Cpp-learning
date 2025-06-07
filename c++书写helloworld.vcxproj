@@ -159,6 +159,8 @@
     <ClCompile Include="028-循环结构练习.cpp" />
     <ClCompile Include="029-do...while.cpp" />
     <ClCompile Include="030-水仙花.cpp" />
+    <ClCompile Include="031-for循环.cpp" />
+    <ClCompile Include="032-敲桌子.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h" />

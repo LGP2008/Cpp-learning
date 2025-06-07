@@ -108,6 +108,12 @@
     <ClCompile Include="030-水仙花.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="031-for循环.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="032-敲桌子.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
