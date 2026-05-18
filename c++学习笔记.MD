@@ -5656,3 +5656,28 @@ int main() {
   ✅ `std::function`
   ✅ lambda
   ✅ 仿函数
+
+### 2.5.2 vector容器放置自定义数据类型
+示例代码：
+```cpp
+#include <iostream>
+#include <vector>
+using namespace std;
+
+struct Person {
+    string name;
+    int age;
+};
+
+int main() {
+    vector<Person> people;
+    people.push_back({"Alice", 25});
+    people.push_back({"Bob", 30});
+    for(vector<Person>::iterator it = people.begin(); it != people.end(); ++it) {
+        cout << "Name: " << it->name << ", Age: " << it->age << endl;
+        cout << "Name: " << (*it).name << ", Age: " << (*it).age << endl;// 迭代器解引用两种方式,it->name和(*it).name等价
+    }
+    return 0;
+}
+```
+在这个示例中，我们定义了一个 `Person` 结构体，包含 `name` 和 `age` 两个成员。我们创建了一个 `vector<Person>` 来存储多个 `Person` 对象，并使用 `push_back` 方法添加了两个 `Person` 实例。最后，我们使用迭代器遍历 `vector`，并通过迭代器访问每个 `Person` 的成员变量。大致和放置内置数据类型的用法类似，只不过这里我们存储的是自定义的数据类型 `Person`，而不是简单的 `int` 或 `string`。迭代器的使用方式也没有改变，依然可以通过 `it->name` 或 `(*it).name` 来访问成员变量。
