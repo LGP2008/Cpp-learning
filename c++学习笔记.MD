@@ -14,6 +14,7 @@
 * **多行注释**：`/*注释内容*/`
   通常放在一段代码的上方，对该段代码整体说明。
   （提示：编译器在编译代码时，会忽略注释内容）
+
 ## 1.3 变量
 
 变量存在的意义：方便我们管理内存空间。内存地址编号一般为16进制数。
@@ -5680,3 +5681,92 @@ int main() {
 }
 ```
 在这个示例中，我们定义了一个 `Person` 结构体，包含 `name` 和 `age` 两个成员。我们创建了一个 `vector<Person>` 来存储多个 `Person` 对象，并使用 `push_back` 方法添加了两个 `Person` 实例。最后，我们使用迭代器遍历 `vector`，并通过迭代器访问每个 `Person` 的成员变量。大致和放置内置数据类型的用法类似，只不过这里我们存储的是自定义的数据类型 `Person`，而不是简单的 `int` 或 `string`。迭代器的使用方式也没有改变，依然可以通过 `it->name` 或 `(*it).name` 来访问成员变量。
+### 2.5.3 容器嵌套容器
+示例代码：
+```cpp
+#include <iostream>
+#include <vector>
+using namespace std;
+int main() {
+    vector<vector<int>> matrix; // 定义一个二维vector
+    vector<int> v1;
+    vector<int> v2;
+    vector<int> v3;
+    vector<int> v4;
+    for (int i = 1; i <= 3; ++i) {
+        v1.push_back(i); // v1 = {1, 2, 3}
+        v2.push_back(i + 3); // v2 = {4, 5, 6}
+        v3.push_back(i + 6); // v3 = {7, 8, 9}
+    }
+    matrix.push_back(v1);
+    matrix.push_back(v2);
+    matrix.push_back(v3);//依次将小容器插入到大容器matrix中，形成一个二维的结构
+    for(vector<vector<int>>::iterator it = matrix.begin(); it != matrix.end(); ++it) {
+        for(vector<int>::iterator innerIt = it->begin(); innerIt != it->end(); ++innerIt) {
+            cout << *innerIt << " "; // 通过两层迭代器访问每个元素
+        }
+        cout << endl;
+    }
+    return 0;
+}
+```
+解释：
+在这个示例中，我们定义了一个 `vector<vector<int>>` 来表示一个二维矩阵。我们首先创建了三个 `vector<int>`，分别存储了不同的整数序列。然后，我们将这三个 `vector<int>` 依次插入到 `matrix` 中，形成了一个二维的结构。最后，我们使用两层迭代器来遍历 `matrix`，外层迭代器遍历每个内层的 `vector<int>`，内层迭代器遍历每个整数元素，并输出它们。通过这种方式，我们实现了容器嵌套容器的使用，展示了 STL 的灵活性和强大功能。
+我来简单明了地解释容器嵌套容器的概念和示例代码：
+
+#### 容器嵌套容器：就像俄罗斯套娃 🪆
+
+##### 核心概念
+容器嵌套容器就是**在容器里面再放容器**，就像：
+- 一个大盒子（外层容器）里面放着几个小盒子（内层容器）
+- 每个小盒子里面又装着具体的东西（数据）
+
+##### 这个代码做了什么？
+
+1. **创建"小盒子"**：创建了3个`vector<int>`（一维数组）
+   - `v1` 装 {1, 2, 3}
+   - `v2` 装 {4, 5, 6}
+   - `v3` 装 {7, 8, 9}
+
+2. **创建"大盒子"**：`vector<vector<int>> matrix`（二维数组）
+
+3. **把小盒子放进大盒子**：
+   ```cpp
+   matrix.push_back(v1);  // 把v1装进matrix
+   matrix.push_back(v2);  // 把v2装进matrix  
+   matrix.push_back(v3);  // 把v3装进matrix
+   ```
+
+4. **最终结构**：
+   ```
+   matrix = [
+     [1, 2, 3],   ← v1
+     [4, 5, 6],   ← v2
+     [7, 8, 9]    ← v3
+   ]
+   ```
+
+##### 两层迭代器遍历（就像两层循环）
+
+```cpp
+for(...外层迭代器...) {      // 遍历每个小盒子
+    for(...内层迭代器...) {  // 遍历小盒子里的每个数字
+        cout << *innerIt << " ";
+    }
+    cout << endl;  // 小盒子遍历完就换行
+}
+```
+
+##### 输出结果：
+```
+1 2 3
+4 5 6
+7 8 9
+```
+
+##### 生活中的类比
+- **Excel表格**：matrix就像整个表格，每个小盒子就是一行数据
+- **书架**：大书架上有多个小书架，每个小书架上有多本书
+- **班级分组**：一个班级（外层容器）有多个小组（内层容器），每个小组有多名学生（数据）
+
+这样使用容器嵌套容器，可以很方便地处理**二维数据**，比如表格、矩阵、地图坐标等！
