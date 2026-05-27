@@ -5765,8 +5765,43 @@ for(...外层迭代器...) {      // 遍历每个小盒子
 ```
 
 ##### 生活中的类比
+
 - **Excel表格**：matrix就像整个表格，每个小盒子就是一行数据
 - **书架**：大书架上有多个小书架，每个小书架上有多本书
 - **班级分组**：一个班级（外层容器）有多个小组（内层容器），每个小组有多名学生（数据）
 
 这样使用容器嵌套容器，可以很方便地处理**二维数据**，比如表格、矩阵、地图坐标等！
+
+## 3.0
+
+### 3.1 string容器
+
+#### 3.1.1 string基本概念
+本质：
+- string是c++风格的字符串，而string本质上是一个类
+##### string与char的区别
+- char *本质是一个指针
+- string 是一个类，类内部内部封装了char*指针用于管理这个字符串，是一个string容器
+##### 特点
+string类内部封装了很多成员方法
+例如：查找find，删除delete，替换replace，插入insert，复制copy等
+string类还重载了很多运算符
+例如：+号连接字符串，==比较字符串是否相等，[]访问字符串中的单个字符等
+string管理char*所分配的内存，不用担心复制越界与取值越界问题，由类内部管理
+
+### 3.1.2 string构造函数
+构造函数原型：
+string(); // 默认构造函数，创建一个空的字符串
+string(const char* s); // 从C风格字符串构造，使用字符s初始化字符串
+string(const string& str); // 拷贝构造函数，使用另一个string对象str初始化字符串
+string(size_t n, char c); // 使用n个字符c构造字符串
+string(const char* s, size_t n); // 从C风格字符串s的前n个字符构造字符串
+string(const string& str, size_t pos, size_t n = npos); // 从另一个string对象str的pos位置开始的n个字符构造字符串
+string(initializer_list<char> il); // 从字符列表构造字符串，例如：string s = {'H', 'e', 'l', 'l', 'o'};
+string(string&& str) noexcept; // 移动构造函数，使用另一个string对象str的资源来构造字符串，避免不必要的复制，提高性能
+string(const char* s, const Allocator& alloc); // 从C风格字符串s构造字符串，并使用指定的分配器alloc来管理内存
+string(size_t n, char c, const Allocator& alloc); // 使用n个字符c构造字符串，并使用指定的分配器alloc来管理内存
+string(const string& str, size_t pos, size_t n, const Allocator& alloc); // 从另一个string对象str的pos位置开始的n个字符构造字符串，并使用指定的分配器alloc来管理内存
+string(string&& str, const Allocator& alloc) noexcept; // 移动构造函数，使用另一个string对象str的资源来构造字符串，并使用指定的分配器alloc来管理内存，避免不必要的复制，提高性能
+
+
