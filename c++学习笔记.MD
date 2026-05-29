@@ -1739,7 +1739,7 @@ void te (){
 
 ```cpp
 class pero {
-    pero (int a ,int b)c(b)d(a){
+    pero (int a ,int b): c(b)d(a){
     cout<<"c:"<<c<<"d"<<d<<endl;
     }
 };
@@ -5791,6 +5791,7 @@ string管理char*所分配的内存，不用担心复制越界与取值越界问
 
 ### 3.1.2 string构造函数
 构造函数原型：
+```cpp
 string(); // 默认构造函数，创建一个空的字符串
 string(const char* s); // 从C风格字符串构造，使用字符s初始化字符串
 string(const string& str); // 拷贝构造函数，使用另一个string对象str初始化字符串
@@ -5803,5 +5804,38 @@ string(const char* s, const Allocator& alloc); // 从C风格字符串s构造字�
 string(size_t n, char c, const Allocator& alloc); // 使用n个字符c构造字符串，并使用指定的分配器alloc来管理内存
 string(const string& str, size_t pos, size_t n, const Allocator& alloc); // 从另一个string对象str的pos位置开始的n个字符构造字符串，并使用指定的分配器alloc来管理内存
 string(string&& str, const Allocator& alloc) noexcept; // 移动构造函数，使用另一个string对象str的资源来构造字符串，并使用指定的分配器alloc来管理内存，避免不必要的复制，提高性能
+```
 
+### 3.1.3 string赋值操作
+```cpp
+string& operator=(const string& str); // 赋值运算符，使用另一个string对象str的内容来赋值给当前字符串
+string& operator=(const char* s); // 赋值运算符，使用C风格字符串s的内容来赋值给当前字符串
+string& operator=(char c); // 赋值运算符，使用单个字符c来赋值给当前字符串，字符串将变为只包含这个字符
+string& operator=(initializer_list<char> il); // 赋值运算符，使用字符列表来赋值给当前字符串，例如：s = {'H', 'e', 'l', 'l', 'o'};
+string& operator=(string&& str) noexcept; // 移动赋值运算符，使用另一个string对象str的资源来赋值给当前字符串，避免不必要的复制，提高性能
+string& assign(const string& str); // assign方法，使用另一个string对象str的内容来赋值给当前字符串
+string& assign(const char* s); // assign方法，使用C风格字符串s的内容来赋值给当前字符串
+string& assign(size_t n, char c); // assign方法，使用n个字符c来赋值给当前字符串，字符串将变为只包含这些字符
+string& assign(const char* s, size_t n); // assign方法，使用C风格字符串s的前n个字符来赋值给当前字符串
+string& assign(const string& str, size_t pos, size_t n); // assign方法，使用另一个string对象str的pos位置开始的n个字符来赋值给当前字符串
+string& assign(initializer_list<char> il); // assign方法，使用字符列表来赋值给当前字符串，例如：s.assign({'H', 'e', 'l', 'l', 'o'});
+string& assign(string&& str) noexcept; // 移动assign方法，使用另一个string对象str的资源来赋值给当前字符串，避免不必要的复制，提高性能
+
+```
+
+assign是string类的一个成员函数，用于给字符串赋值。它提供了多种重载形式，可以接受不同类型的参数来赋值给字符串对象。assign方法的作用与赋值运算符（operator=）类似，但它提供了更多的灵活性和功能，例如可以指定分配器来管理内存，或者使用移动语义来提高性能。通过assign方法，你可以方便地将一个字符串对象、C风格字符串、字符列表等赋值给另一个字符串对象，同时还可以控制内存管理和性能优化。
+
+string& assign采取用链式调用的方式，返回一个对当前字符串对象的引用，这样你可以连续调用assign方法来进行多次赋值操作。例如：
+
+```cpp
+string s;
+s.assign("Hello, World!");
+```
+创建一个字符串对象s，并使用assign方法将C风格字符串"Hello, World!"赋值给s。你也可以连续调用assign方法，
+输出```cpp
+string s;
+s.assign("Hello, ").assign("World!"); // 先赋值 "Hello, "，再赋值 "World!"
+cout << s; // 输出 "World!"// 最终s的值是 "World!"，因为第二次assign覆盖了第一次的赋值
+
+```
 
