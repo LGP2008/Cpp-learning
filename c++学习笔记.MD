@@ -4,6 +4,7 @@
 
 `cout` 输出，`cin` 输入。
 `main` 是一个程序入口，每个程序都必须有这么一个函数，有且仅有一个。main是主函数，只能有一个，其他是辅函数，可以自己命名。
+`std::cin.get()` //等待用户输入一个字符，按回车结束,可配合return 0;一起使用，表示程序正常结束。用于替代system("pause");，以便兼容不同操作系统。
 
 ## 1.2 注释
 
@@ -3552,7 +3553,7 @@ try {
 `getline(test, content);` 是 C++ 中用于从输入流（如文件流、标准输入等）中**读取一行文本**的函数。下面从函数原型、参数含义、工作原理、常见用法、注意事项以及与 `>>` 的区别等方面详细解释。
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-## 1. 函数原型
+1. 函数原型
 
 `getline` 有两个常见版本，一个在 `<string>` 头文件中定义（用于 `std::string`），另一个是 `istream` 类的成员函数（用于 C 风格字符串）。我们最常用的是 **全局函数** 版本：
 
@@ -3568,7 +3569,7 @@ std::istream& getline(std::istream& is, std::string& str, char delim);
 
 ---
 
-## 2. 工作原理
+2. 工作原理
 
 `getline` 从输入流中逐个读取字符，直到：
 
@@ -3577,7 +3578,7 @@ std::istream& getline(std::istream& is, std::string& str, char delim);
 - 或发生错误。
   读取的字符（**不包括分隔符**）存入 `str` 中。**分隔符本身不会被存入字符串**，而是被从流中移除。如果遇到文件结束，则设置流的状态标志（`eofbit`）。
 
-### 示例：
+示例：
 
 假设文件 `1.txt` 内容为：
 
@@ -3589,7 +3590,7 @@ This is line 2.
 执行 `getline(test, content);` 后，`content` 变成 `"Hello, World!"`，文件指针移动到第二行开头。再次调用 `getline(test, content);`，`content` 变成 `"This is line 2."`。
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-## 3. 返回值
+3. 返回值
 
 `getline` 返回输入流对象的引用（即第一个参数 `is`）。这个返回值可以用于**链式调用**或**条件判断**。
 常见用法：
@@ -3613,7 +3614,7 @@ while (getline(test, content)) {
 当读取失败（如到达文件末尾）时，循环结束。
 ------------------------------------------
 
-## 4. 与 `>>` 运算符的区别
+4. 与 `>>` 运算符的区别
 
 
 | 特性       | `>>` 运算符                                            | `getline`                                  |
@@ -3633,9 +3634,9 @@ getline(test, line);    // 正确读取下一行
 
 ---
 
-## 5. 实际使用示例
+5. 实际使用示例
 
-### 5.1 从文件逐行读取并输出到屏幕
+5.1 从文件逐行读取并输出到屏幕
 
 ```cpp
 #include <iostream>
@@ -3658,7 +3659,7 @@ int main() {
 }
 ```
 
-### 5.2 读取时自定义分隔符（例如读取以逗号分隔的数据）
+5.2 读取时自定义分隔符（例如读取以逗号分隔的数据）
 
 ```cpp
 #include <iostream>
@@ -3679,7 +3680,7 @@ int main() {
 
 ---
 
-## 6. 错误处理与状态标志
+6. 错误处理与状态标志
 
 `getline` 可能因以下原因失败：
 
@@ -3690,7 +3691,7 @@ int main() {
 
 ---
 
-## 7. 注意事项
+7. 注意事项
 
 - **效率**：`getline` 会动态扩展 `std::string` 以容纳数据，无需担心缓冲区溢出。
 - **空行**：如果文件有一行是空的（只有换行符），`getline` 会读取空字符串并成功（`str.empty()` 为 `true`）。
@@ -3699,14 +3700,14 @@ int main() {
 
 ---
 
-## 8. 总结
+8. 总结
 
 `getline(test, content);` 是 C++ 中读取文件一行的最常用方法，尤其适合处理包含空格的文本。它简单安全，结合循环可以轻松遍历文件的所有行。理解它与 `>>` 的区别，并注意混合使用时的换行符残留问题，能帮助你写出更健壮的文件读取代码。
 
 好的，我来详细解释 `getline(test, content);` 中的两个参数。
 -----------------------------------------------------------
 
-## 1. 函数签名回顾
+1. 函数签名回顾
 
 ```cpp
 std::istream& getline(std::istream& is, std::string& str);
@@ -3715,7 +3716,7 @@ std::istream& getline(std::istream& is, std::string& str);
 这是一个全局函数（定义在 `<string>` 头文件中），作用是从输入流中读取一行字符，存入字符串中。
 --------------------------------------------------------------------------------------------
 
-## 2. 第一个参数：`test`
+2. 第一个参数：`test`
 
 `getline(test, content);`
 
@@ -3733,7 +3734,7 @@ std::istream& getline(std::istream& is, std::string& str);
 **关键点**：函数接收的是引用，所以传入的是流对象本身（而不是副本），函数内部会直接操作这个流（改变其读取位置、状态标志等）。
 ----------------------------------------------------------------------------------------------------------------------------
 
-## 3. 第二个参数：`content`
+3. 第二个参数：`content`
 
 `getline(test, content);`
 
@@ -3752,7 +3753,7 @@ getline(test, line);   // 读取一行存入 line
 **关键点**：第二个参数必须是 `std::string` 类型的左值（可修改的对象），不能是常量或临时字符串。
 -----------------------------------------------------------------------------------------------
 
-## 4. 调用后的变化
+4. 调用后的变化
 
 执行 `getline(test, content);` 后：
 
@@ -3761,19 +3762,19 @@ getline(test, line);   // 读取一行存入 line
 
 ---
 
-## 5. 为什么这样设计？
+5. 为什么这样设计？
 
 C++ 的 I/O 流库设计遵循“流 + 缓冲区”模式，`getline` 作为一个独立函数，使得任何输入流（不限于文件流）都能方便地读取一行。使用引用传递允许函数直接修改流状态和字符串，符合 C++ 的效率和灵活性原则。
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-## 6. 与其他形式对比
+6. 与其他形式对比
 
 - **成员函数版本**：`istream` 类也有一个成员函数 `getline(char* buffer, size_t size)`，但它针对 C 风格字符串，需要手动管理缓冲区，容易出错。全局的 `std::getline` 与 `std::string` 配合更安全。
 - **`>>` 运算符**：`test >> content` 只能读取到空白字符，不能读取包含空格的整行。`getline` 弥补了这个不足。
 
 ---
 
-## 7. 常见错误
+7. 常见错误
 
 - **忘记包含头文件**：`#include <string>` 是必须的，否则 `getline` 无法识别 `std::string` 版本。
 - **混合使用 `>>` 和 `getline`**：如先 `test >> num` 再 `getline(test, line)`，会因 `>>` 留下的换行符导致 `getline` 读到空行。解决方法是在 `>>` 后调用 `test.ignore()` 忽略换行符。
@@ -3781,7 +3782,7 @@ C++ 的 I/O 流库设计遵循“流 + 缓冲区”模式，`getline` 作为一�
 
 ---
 
-## 8. 总结
+8. 总结
 
 - **第一个参数**：输入流对象，指定数据来源（如文件流、标准输入）。
 - **第二个参数**：字符串引用，用于存放读取结果，函数直接修改它。
@@ -3792,7 +3793,7 @@ C++ 的 I/O 流库设计遵循“流 + 缓冲区”模式，`getline` 作为一�
 在 C++ 中，向文件写入数据主要通过**输出文件流对象**（`std::ofstream` 或 `std::fstream`）的以下方式实现：
 --------------------------------------------------------------------------------------------------------
 
-## 1. 最常用的写入方式：插入运算符 `<<`
+1. 最常用的写入方式：插入运算符 `<<`
 
 ```cpp
 std::ofstream outFile("output.txt");
@@ -3805,7 +3806,7 @@ outFile << 123 << " " << 45.67;
 
 ---
 
-## 2. 二进制写入：`write()` 成员函数
+2. 二进制写入：`write()` 成员函数
 
 ```cpp
 std::ofstream outFile("data.bin", std::ios::binary);
@@ -3819,7 +3820,7 @@ outFile.write(reinterpret_cast<char*>(arr), sizeof(arr));
 
 ---
 
-## 3. 其他写入成员函数
+3. 其他写入成员函数
 
 
 | 函数                                 | 说明                                 |
@@ -3830,7 +3831,7 @@ outFile.write(reinterpret_cast<char*>(arr), sizeof(arr));
 
 ---
 
-## 4. 使用 `fstream` 同时读写
+4. 使用 `fstream` 同时读写
 
 ```cpp
 std::fstream file("data.txt", std::ios::in | std::ios::out);
@@ -3841,9 +3842,9 @@ file << "覆盖开头";
 
 ---
 
-## 5. 常见使用模式
+5. 常见使用模式
 
-### 文本写入
+文本写入
 
 ```cpp
 #include <fstream>
@@ -3858,7 +3859,7 @@ int main() {
 }
 ```
 
-### 二进制写入
+二进制写入
 
 ```cpp
 std::ofstream fout("data.bin", std::ios::binary);
@@ -3868,7 +3869,7 @@ fout.write(reinterpret_cast<char*>(&value), sizeof(value));
 
 ---
 
-## 6. 与读取的对应关系
+6. 与读取的对应关系
 
 
 | 操作方向 | 文本模式                   | 二进制模式 |
@@ -3878,7 +3879,7 @@ fout.write(reinterpret_cast<char*>(&value), sizeof(value));
 
 ---
 
-## 7. 注意事项
+7. 注意事项
 
 - **打开模式**：`std::ofstream` 默认以 `std::ios::out` 打开（清空原有内容）。若需追加，使用 `std::ios::app`。
 - **错误检查**：写入前应检查文件是否成功打开，写入后可检查流状态。
@@ -4094,7 +4095,194 @@ int main() {
 # C++提高编程
 
 本阶段主要针对C++泛型编程与STL技术进行讲解，探讨C++的深度应用。
+## cin特别篇
+以下是 `cin`（即 `std::istream` 类型）常用的成员函数，包含语法和返回值说明。
 
+---
+
+### `cin` 常用成员函数速查表
+
+| 成员函数 | 语法 | 返回值 |
+|---------|------|--------|
+| **`get`**<br>(读取一个字符) | `cin.get()` | 返回读取的字符（`int` 类型，`EOF` 表示失败） |
+| **`get`**<br>(读取 C 字符串) | `cin.get(char* s, streamsize n)` | 返回 `cin` 自身（`istream&`），可链式调用 |
+| **`get`**<br>(读取到引用) | `cin.get(char& c)` | 返回 `cin` 自身（`istream&`） |
+| **`getline`** | `cin.getline(char* s, streamsize n, char delim = '\n')` | 返回 `cin` 自身（`istream&`） |
+| **`ignore`** | `cin.ignore(streamsize n = 1, int delim = EOF)` | 返回 `cin` 自身（`istream&`） |
+| **`peek`** | `cin.peek()` | 返回下一个字符（`int` 类型），但不从流中移除，`EOF` 表示流结束 |
+| **`putback`** | `cin.putback(char c)` | 返回 `cin` 自身（`istream&`），失败时设置 `failbit` |
+| **`read`** | `cin.read(char* s, streamsize n)` | 返回 `cin` 自身（`istream&`） |
+| **`gcount`** | `cin.gcount()` | 返回最后一次无格式输入操作实际提取的字符数（`streamsize` 类型） |
+| **`clear`** | `cin.clear(iostate state = goodbit)` | 返回 `void`（无返回值），用于清除/设置流状态标志 |
+| **`fail`** | `cin.fail()` | 返回 `bool`，若流发生非致命错误（如类型不匹配）则为 `true` |
+| **`good`** | `cin.good()` | 返回 `bool`，若流状态完全正常（无任何错误标志）则为 `true` |
+| **`eof`** | `cin.eof()` | 返回 `bool`，若已经到达文件末尾则为 `true` |
+| **`bad`** | `cin.bad()` | 返回 `bool`，若发生致命错误（如流缓冲区损坏）则为 `true` |
+
+---
+
+### 说明
+- **返回 `istream&`** 的函数支持链式调用，例如 `cin.get(c).get();`
+- **无格式输入函数**（`get`, `getline`, `read`, `ignore` 等）不会跳过前导空白（除非指定了参数）。
+- `getline` 读取时会提取并丢弃分隔符（默认换行符），但分隔符不会被存入目标数组。
+- `ignore` 常用于忽略缓冲区中残留的字符（尤其是换行符），配合 `numeric_limits<streamsize>::max()` 可忽略整行。
+- 流状态标志（`goodbit`, `failbit`, `eofbit`, `badbit`）可通过 `clear` 和 `setstate` 操作。
+
+---
+
+### 常用示例
+
+```cpp
+#include <iostream>
+#include <limits>
+using namespace std;
+
+int main() {
+    char ch;
+    cin.get(ch);                     // 读取一个字符
+    cout << "第一个字符：" << ch << endl;
+
+    cin.ignore(100, '\n');           // 忽略剩余字符直到换行
+
+    char buffer[50];
+    cin.getline(buffer, 50);         // 读取一行（不含换行）
+
+    if (cin.fail()) {                // 检查是否输入过长等
+        cin.clear();                 // 清除错误标志
+    }
+
+    int next = cin.peek();           // 偷看下一个字符但不提取
+    if (next != EOF) {
+        cout << "下一个字符是：" << char(next) << endl;
+    }
+
+    return 0;
+}
+```
+防止输入不符合类型的示例
+```cpp
+#include <limits>  // 为了使用 std::numeric_limits
+
+// 安全输入整数的函数
+int getValidInt(const std::string& prompt) {
+    int value;
+    while (true) {
+        std::cout << prompt;
+        std::cin >> value;
+        if (std::cin.fail()) {
+            std::cin.clear();  // 清除错误标志
+            // 忽略当前行中所有剩余字符（直到换行符）
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "输入无效，请输入一个整数！\n";
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');//清空输入缓冲区防止错误
+        } else {
+            // 成功读取整数，还要清空输入缓冲区中可能残留的换行符（可选）
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            return value;
+        }
+    }
+}
+
+// 安全输入浮点数的函数（同理）
+float getValidFloat(const std::string& prompt) {
+    float value;
+    while (true) {
+        std::cout << prompt;
+        std::cin >> value;
+        if (std::cin.fail()) {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "输入无效，请输入一个数字（例如 85.5）！\n";
+        } else {
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            return value;
+        }
+    }
+}
+```
+## cout特别篇
+以下是 `cout`（即 `std::ostream` 类型）常用的成员函数，包含语法和返回值说明。
+
+---
+
+### `cout` 常用成员函数速查表
+
+| 成员函数 | 语法 | 返回值 |
+|---------|------|--------|
+| **`put`** | `cout.put(char c)` | 返回 `cout` 自身（`ostream&`），可链式调用 |
+| **`write`** | `cout.write(const char* s, streamsize n)` | 返回 `cout` 自身（`ostream&`），输出 `s` 的前 `n` 个字符 |
+| **`flush`** | `cout.flush()` | 返回 `cout` 自身（`ostream&`），强制刷新输出缓冲区 |
+| **`tellp`** | `cout.tellp()` | 返回当前输出位置索引（`pos_type`，通常为 `int` 或 `long long`） |
+| **`seekp`** | `cout.seekp(pos_type pos)`<br>`cout.seekp(off_type off, ios_base::seekdir dir)` | 返回 `cout` 自身（`ostream&`），用于文件流；对 `cout` 通常无效 |
+| **`precision`** | `cout.precision(int new_precision)` | 返回**旧的**浮点数精度（`int`） |
+| **`width`** | `cout.width(int new_width)` | 返回**旧的**字段宽度（`int`） |
+| **`fill`** | `cout.fill(char new_fill)` | 返回**旧的**填充字符（`char`） |
+| **`setf`** | `cout.setf(ios_base::fmtflags flags)`<br>`cout.setf(ios_base::fmtflags flags, ios_base::fmtflags mask)` | 返回 `void`，设置格式标志 |
+| **`unsetf`** | `cout.unsetf(ios_base::fmtflags flags)` | 返回 `void`，清除格式标志 |
+| **`flags`** | `cout.flags()`<br>`cout.flags(ios_base::fmtflags new_flags)` | 无参：返回当前格式标志（`fmtflags`）<br>有参：设置新标志并返回旧的 |
+| **`copyfmt`** | `cout.copyfmt(const ios& rhs)` | 返回 `void`，从另一个流复制格式设置 |
+| **`good`** | `cout.good()` | 返回 `bool`，若流状态正常则为 `true` |
+| **`fail`** | `cout.fail()` | 返回 `bool`，若发生非致命错误（如输出失败）则为 `true` |
+| **`bad`** | `cout.bad()` | 返回 `bool`，若发生致命错误则为 `true` |
+| **`eof`** | `cout.eof()` | 返回 `bool`，对于 `cout` 通常无用（输出流无文件尾概念），但为兼容性存在 |
+| **`clear`** | `cout.clear(iostate state = goodbit)` | 返回 `void`，设置流状态 |
+| **`rdbuf`** | `cout.rdbuf()`<br>`cout.rdbuf(streambuf* sb)` | 无参：返回指向流缓冲区的指针（`streambuf*`）<br>有参：设置新缓冲区并返回旧的 |
+
+---
+
+### 说明
+- **返回 `ostream&`** 的函数支持链式调用，例如 `cout.put('A').put('B');`
+- `precision`, `width`, `fill` 的**有参版本**返回**旧值**，无参版本返回当前值（但 `width` 无参版本为标准库提供，通常用 `cout.width()` 获取当前宽度）。
+- `setf` 和 `unsetf` 用于控制进制（`hex`, `dec`, `oct`）、对齐（`left`, `right`, `internal`）、浮点格式（`fixed`, `scientific`）等。
+- 更推荐使用 **操纵符**（如 `setw`, `setprecision`, `setfill`, `left`, `fixed` 等），它们更直观，但底层调用的就是这些成员函数。
+
+---
+
+### 常用示例
+
+```cpp
+#include <iostream>
+#include <iomanip>
+using namespace std;
+
+int main() {
+    cout.put('H').put('i').put('\n');          // 输出 "Hi\n"
+
+    cout.write("Hello", 5);                    // 输出 "Hello"
+
+    int old_prec = cout.precision(4);          // 设置浮点数精度为4
+    cout << 3.1415926 << endl;                 // 输出 3.142
+    cout.precision(old_prec);                  // 恢复旧精度
+
+    int old_width = cout.width(10);             // 设置最小字段宽度为10
+    cout.fill('*');                            // 填充字符改为 *
+    cout << 42 << endl;                        // 输出 "********42"
+    cout.width(old_width);                     // 恢复旧宽度
+    cout.fill(' ');                            // 恢复填充字符
+
+    cout.setf(ios::hex, ios::basefield);       // 设置为十六进制输出
+    cout << 255 << endl;                       // 输出 "ff"
+    cout.unsetf(ios::hex);                    // 清除十六进制标志
+    cout.setf(ios::dec);                      // 恢复十进制
+
+    cout << "缓冲区刷新前" << flush;            // 立即刷新，不输出换行
+
+    return 0;
+}
+```
+
+---
+
+### 对比 `cin` 和 `cout`
+
+| 项目 | `cin`（输入流） | `cout`（输出流） |
+|------|----------------|------------------|
+| 常用成员 | `get`, `getline`, `ignore`, `peek`, `putback` | `put`, `write`, `flush` |
+| 格式控制 | 无（输入一般不用格式） | `precision`, `width`, `fill`, `setf` |
+| 位置操作 | `tellg`, `seekg` | `tellp`, `seekp` |
+| 状态函数 | `good`, `fail`, `bad`, `eof`, `clear` | 完全相同（继承自 `ios_base`） |
+
+希望这个表格能帮你做好笔记！
 ## 1. 模板编程
 
 ### 1.1 模板的初概念
@@ -5466,6 +5654,7 @@ int main() {
 其余的，写代码时遇到不会的，直接搜“[容器名] + 用法”。
 
 ## 2.5 容器迭代器算法初识
+
 了解容器迭代器算法的基本概念和使用方法。感受STL魔力
 STL最常用的容器是vector可以理解为数组，最常用的算法是sort、find、reverse、copy、for_each等，最常用的迭代器是vector<int>::iterator（随机访问迭代器）。通过这些工具，你可以轻松地操作和处理数据，感受到STL的强大和便利。
 
@@ -5474,6 +5663,7 @@ STL最常用的容器是vector可以理解为数组，最常用的算法是sort�
 容器: vector
 算法：for_each
 迭代器：vector<int>::iterator (随机访问迭代器)
+vector可通过size()成员函数获取当前元素个数，通过push_back()成员函数在末尾添加元素。
 vector是一个动态数组，可以存放任意类型的数据，包括内置数据类型和自定义数据类型。当vector存放内置数据类型时，vector会自动管理内存，动态调整大小以适应元素的增加或减少。例如：
 
 ```cpp
@@ -5658,7 +5848,9 @@ int main() {
   ✅ 仿函数
 
 ### 2.5.2 vector容器放置自定义数据类型
+
 示例代码：
+
 ```cpp
 #include <iostream>
 #include <vector>
@@ -5680,9 +5872,13 @@ int main() {
     return 0;
 }
 ```
+
 在这个示例中，我们定义了一个 `Person` 结构体，包含 `name` 和 `age` 两个成员。我们创建了一个 `vector<Person>` 来存储多个 `Person` 对象，并使用 `push_back` 方法添加了两个 `Person` 实例。最后，我们使用迭代器遍历 `vector`，并通过迭代器访问每个 `Person` 的成员变量。大致和放置内置数据类型的用法类似，只不过这里我们存储的是自定义的数据类型 `Person`，而不是简单的 `int` 或 `string`。迭代器的使用方式也没有改变，依然可以通过 `it->name` 或 `(*it).name` 来访问成员变量。
+
 ### 2.5.3 容器嵌套容器
+
 示例代码：
+
 ```cpp
 #include <iostream>
 #include <vector>
@@ -5710,6 +5906,7 @@ int main() {
     return 0;
 }
 ```
+
 解释：
 在这个示例中，我们定义了一个 `vector<vector<int>>` 来表示一个二维矩阵。我们首先创建了三个 `vector<int>`，分别存储了不同的整数序列。然后，我们将这三个 `vector<int>` 依次插入到 `matrix` 中，形成了一个二维的结构。最后，我们使用两层迭代器来遍历 `matrix`，外层迭代器遍历每个内层的 `vector<int>`，内层迭代器遍历每个整数元素，并输出它们。通过这种方式，我们实现了容器嵌套容器的使用，展示了 STL 的灵活性和强大功能。
 我来简单明了地解释容器嵌套容器的概念和示例代码：
@@ -5717,27 +5914,29 @@ int main() {
 #### 容器嵌套容器：就像俄罗斯套娃 🪆
 
 ##### 核心概念
+
 容器嵌套容器就是**在容器里面再放容器**，就像：
+
 - 一个大盒子（外层容器）里面放着几个小盒子（内层容器）
 - 每个小盒子里面又装着具体的东西（数据）
 
 ##### 这个代码做了什么？
 
 1. **创建"小盒子"**：创建了3个`vector<int>`（一维数组）
+
    - `v1` 装 {1, 2, 3}
    - `v2` 装 {4, 5, 6}
    - `v3` 装 {7, 8, 9}
-
 2. **创建"大盒子"**：`vector<vector<int>> matrix`（二维数组）
-
 3. **把小盒子放进大盒子**：
+
    ```cpp
    matrix.push_back(v1);  // 把v1装进matrix
    matrix.push_back(v2);  // 把v2装进matrix  
    matrix.push_back(v3);  // 把v3装进matrix
    ```
-
 4. **最终结构**：
+
    ```
    matrix = [
      [1, 2, 3],   ← v1
@@ -5758,6 +5957,7 @@ for(...外层迭代器...) {      // 遍历每个小盒子
 ```
 
 ##### 输出结果：
+
 ```
 1 2 3
 4 5 6
@@ -5775,14 +5975,169 @@ for(...外层迭代器...) {      // 遍历每个小盒子
 ## 3.0
 
 ### 3.1 string容器
+#### string常用成员函数和操作符
+以下是 `std::string` 常用的成员函数，包含语法和返回值说明，方便你做笔记。
 
+---
+
+##### `std::string` 常用成员函数速查表
+
+> 头文件：`#include <string>`  
+> 注意：`std::string` 的成员函数数量较多，下表列出最常用的。
+
+###### 一、构造与赋值
+
+| 成员函数 | 语法 | 返回值 | 说明 |
+|---------|------|--------|------|
+| **构造函数** | `string()` | — | 创建空字符串 |
+| | `string(const char* s)` | — | 从 C 字符串构造 |
+| | `string(const string& str)` | — | 拷贝构造 |
+| | `string(size_t n, char c)` | — | 用 n 个字符 c 构造 |
+| **`assign`** | `str.assign(const char* s)` | `string&` | 重新赋值，返回自身引用 |
+| | `str.assign(size_t n, char c)` | `string&` | 赋值为 n 个 c |
+
+###### 二、容量相关
+
+| 成员函数 | 语法 | 返回值 | 说明 |
+|---------|------|--------|------|
+| **`size` / `length`** | `str.size()`<br>`str.length()` | `size_t` | 返回字符串中字符个数（不含 `\0`） |
+| **`capacity`** | `str.capacity()` | `size_t` | 返回当前已分配的存储空间大小 |
+| **`empty`** | `str.empty()` | `bool` | 字符串为空返回 `true` |
+| **`resize`** | `str.resize(size_t n)`<br>`str.resize(size_t n, char c)` | `void` | 改变字符串长度为 n，多删少补（补 c 或默认 `\0`） |
+| **`reserve`** | `str.reserve(size_t n)` | `void` | 预留至少 n 个字符的存储空间 |
+| **`shrink_to_fit`** (C++11) | `str.shrink_to_fit()` | `void` | 请求减小 capacity 以匹配 size |
+
+###### 三、元素访问
+
+| 成员函数 | 语法 | 返回值 | 说明 |
+|---------|------|--------|------|
+| **`operator[]`** | `str[pos]` | `char&` (const 版本为 `const char&`) | 下标访问，不检查边界 |
+| **`at`** | `str.at(pos)` | `char&` (const 版本 `const char&`) | 边界检查，越界抛出 `out_of_range` |
+| **`front`** | `str.front()` | `char&` | 返回第一个字符的引用 |
+| **`back`** | `str.back()` | `char&` | 返回最后一个字符的引用 |
+| **`data`** | `str.data()` | `char*` (C++11 后结尾有 `\0`) | 返回底层字符数组指针 |
+| **`c_str`** | `str.c_str()` | `const char*` | 返回 C 风格字符串（以 `\0` 结尾） |
+
+###### 四、修改操作
+
+| 成员函数 | 语法 | 返回值 | 说明 |
+|---------|------|--------|------|
+| **`operator+=`** | `str += ch`<br>`str += "abc"`<br>`str += another_str` | `string&` | 追加单个字符、C 字符串或 string |
+| **`append`** | `str.append(const char* s)` | `string&` | 追加字符串 |
+| | `str.append(size_t n, char c)` | `string&` | 追加 n 个 c |
+| **`push_back`** | `str.push_back(char c)` | `void` | 追加一个字符 |
+| **`pop_back`** (C++11) | `str.pop_back()` | `void` | 删除最后一个字符 |
+| **`insert`** | `str.insert(pos, const char* s)` | `string&` | 在位置 pos 之前插入字符串 |
+| | `str.insert(pos, size_t n, char c)` | `string&` | 插入 n 个 c |
+| **`erase`** | `str.erase(pos, len = npos)` | `string&` | 从 pos 开始删除 len 个字符 |
+| | `str.erase(iterator first, iterator last)` | `iterator` | 删除迭代器区间 |
+| **`replace`** | `str.replace(pos, len, const char* s)` | `string&` | 将 [pos, pos+len) 替换为 s |
+| **`clear`** | `str.clear()` | `void` | 清空字符串，size 变为 0 |
+| **`swap`** | `str.swap(other_str)` | `void` | 交换两个字符串的内容 |
+
+###### 五、查找与子串
+
+| 成员函数 | 语法 | 返回值 | 说明 |
+|---------|------|--------|------|
+| **`find`** | `str.find(const string& sub, pos = 0)` | `size_t` | 从 pos 开始查找子串，返回第一次出现的位置，未找到返回 `npos` |
+| | `str.find(const char* s, pos = 0)` | `size_t` | 同上 |
+| | `str.find(char c, pos = 0)` | `size_t` | 查找字符 |
+| **`rfind`** | `str.rfind(...)` | `size_t` | 从右向左查找 |
+| **`find_first_of`** | `str.find_first_of(const char* s, pos = 0)` | `size_t` | 查找第一个出现在 s 中的字符 |
+| **`find_last_of`** | 类似 | `size_t` | 最后一个出现在 s 中的字符 |
+| **`find_first_not_of`** | 类似 | `size_t` | 第一个不在 s 中的字符 |
+| **`substr`** | `str.substr(pos = 0, len = npos)` | `string` | 返回子串（从 pos 开始，最多 len 个字符） |
+
+###### 六、比较与转换
+
+| 成员函数 | 语法 | 返回值 | 说明 |
+|---------|------|--------|------|
+| **`compare`** | `str.compare(const string& s)` | `int` | 相等返回 0；小于返回负值；大于返回正值 |
+| | `str.compare(pos, len, s)` | `int` | 比较 str 的子串与 s |
+| **`stoi` / `stol` / `stod`** | 自由函数，非成员 | — | 字符串转数字（`std::stoi(str)`） |
+| **`to_string`** | 自由函数 | `string` | 数字转字符串（`std::to_string(123)`） |
+
+###### 七、迭代器
+
+| 成员函数 | 语法 | 返回值 | 说明 |
+|---------|------|--------|------|
+| **`begin` / `end`** | `str.begin()`<br>`str.end()` | `iterator` / `const_iterator` | 返回起始/末尾（最后一个字符之后）迭代器 |
+| **`rbegin` / `rend`** | `str.rbegin()`<br>`str.rend()` | `reverse_iterator` | 反向迭代器 |
+
+---
+
+##### 常用静态成员
+
+| 常量 | 值 | 说明 |
+|------|---|------|
+| **`npos`** | `static const size_t npos = -1;` | 表示“直到结尾”或“未找到”的特殊值 |
+
+---
+
+##### 典型示例
+
+```cpp
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+    string s = "Hello";
+
+    // 大小
+    cout << s.size() << endl;        // 5
+
+    // 访问
+    cout << s[1] << endl;            // e
+    cout << s.at(1) << endl;         // e（边界检查）
+
+    // 修改
+    s.append(" World");              // "Hello World"
+    s.push_back('!');                // "Hello World!"
+    s.insert(5, ",");                // "Hello, World!"
+    s.erase(5, 1);                   // 删除逗号 -> "Hello World!"
+    s.replace(6, 5, "C++");          // 将 "World" 替换为 "C++" -> "Hello C++!"
+
+    // 查找
+    size_t pos = s.find("C++");
+    if (pos != string::npos) {
+        cout << "Found at " << pos << endl;   // 输出 6
+    }
+
+    // 子串
+    string sub = s.substr(6, 3);     // "C++"
+
+    // 清空与判断
+    s.clear();
+    if (s.empty()) {
+        cout << "字符串为空" << endl;
+    }
+
+    return 0;
+}
+```
+
+---
+
+##### 总结记忆口诀
+
+> **构造赋值容量查，访问修改迭代抓。  
+> 查找子串常比较，npos 表示未找到它。**
+
+希望这份笔记对你有帮助！
 #### 3.1.1 string基本概念
+
 本质：
+
 - string是c++风格的字符串，而string本质上是一个类
+
 ##### string与char的区别
+
 - char *本质是一个指针
 - string 是一个类，类内部内部封装了char*指针用于管理这个字符串，是一个string容器
+
 ##### 特点
+
 string类内部封装了很多成员方法
 例如：查找find，删除delete，替换replace，插入insert，复制copy等
 string类还重载了很多运算符
@@ -5790,7 +6145,9 @@ string类还重载了很多运算符
 string管理char*所分配的内存，不用担心复制越界与取值越界问题，由类内部管理
 
 ### 3.1.2 string构造函数
+
 构造函数原型：
+
 ```cpp
 string(); // 默认构造函数，创建一个空的字符串
 string(const char* s); // 从C风格字符串构造，使用字符s初始化字符串
@@ -5807,6 +6164,7 @@ string(string&& str, const Allocator& alloc) noexcept; // 移动构造函数，�
 ```
 
 ### 3.1.3 string赋值操作
+
 ```cpp
 string& operator=(const string& str); // 赋值运算符，使用另一个string对象str的内容来赋值给当前字符串
 string& operator=(const char* s); // 赋值运算符，使用C风格字符串s的内容来赋值给当前字符串
@@ -5830,7 +6188,7 @@ string& assign采取用链式调用的方式，返回一个对当前字符串对
 ```cpp
 string s;
 s.assign("Hello, World!");
-```
+
 创建一个字符串对象s，并使用assign方法将C风格字符串"Hello, World!"赋值给s。你也可以连续调用assign方法，
 输出```cpp
 string s;
@@ -5839,3 +6197,4 @@ cout << s; // 输出 "World!"// 最终s的值是 "World!"，因为第二次assig
 
 ```
 
+### 3.1.4 sting字符串拼接
