@@ -5304,8 +5304,91 @@ void print(int x) {
 }
 for_each(v.begin(), v.end(), print);   // 输出每个元素
 ```
+#### vector的删除操作
+删除 `std::vector` 容器里的元素，主要有以下几种方法，具体用哪个取决于你的需求。
+
+##### 1. 删除所有元素：`clear()`
+这是清空整个容器最直接的方法。
+*   **功能**：移除 `vector` 中的所有元素。调用后，容器的大小（`size`）变为 0。
+*   **注意**：`clear()` **不会释放**容器已分配的内存（即容量 `capacity` 不变）。如果希望彻底释放内存，可以结合 `shrink_to_fit()` 使用。
+*   **示例**：
+    ```cpp
+    std::vector<int> vec = {1, 2, 3};
+    vec.clear(); // vec 变为空，但容量 (capacity) 可能仍是 3
+    ```
+
+##### 2. 删除末尾元素：`pop_back()`
+*   **功能**：移除 `vector` 中的最后一个元素。
+*   **示例**：
+    ```cpp
+    std::vector<int> vec = {1, 2, 3};
+    vec.pop_back(); // vec 变为 {1, 2}
+    ```
+
+##### 3. 删除指定位置或范围的元素：`erase()`
+*   **功能**：删除单个元素或一个范围内的元素。
+*   **注意**：`erase()` 操作会导致被删除元素之后的所有迭代器失效。在循环中删除时，需要特别小心。
+*   **示例**：
+    ```cpp
+    std::vector<int> vec = {1, 2, 3, 4, 5};
+
+    // 删除单个元素：删除第 3 个元素（索引为 2）
+    vec.erase(vec.begin() + 2); // vec 变为 {1, 2, 4, 5}
+
+    // 删除范围内的元素：删除第 2 到第 4 个元素（索引 1 到 3）
+    vec.erase(vec.begin() + 1, vec.begin() + 4); // vec 变为 {1, 5}
+    ```
+
+##### 4. 删除所有特定值的元素：`erase` + `remove` 惯用法
+这是 C++ 中删除所有等于某个特定值的元素的标准做法。
+*   **原理**：`std::remove` 会将所有不等于特定值的元素移到容器前部，并返回一个新的“逻辑末尾”迭代器。然后 `erase` 负责删除从这个“逻辑末尾”到实际末尾的所有元素。
+*   **示例**：
+    ```cpp
+    std::vector<int> vec = {1, 2, 3, 2, 5};
+    // 删除所有值为 2 的元素
+    vec.erase(std::remove(vec.begin(), vec.end(), 2), vec.end());
+    // vec 变为 {1, 3, 5}
+    ```
+
+ ##### 5. 删除所有满足条件的元素：`erase` + `remove_if` 惯用法
+与上面的方法类似，但可以指定更复杂的删除条件。
+*   **示例**：删除所有偶数
+    ```cpp
+    std::vector<int> vec = {1, 2, 3, 4, 5};
+    // 删除所有偶数
+    vec.erase(std::remove_if(vec.begin(), vec.end(), 
+                             [](int i) { return i % 2 == 0; }), 
+              vec.end());
+    // vec 变为 {1, 3, 5}
+    ```
+
+ ##### 6. C++20 及以后的新方法：`std::erase` 和 `std::erase_if`
+从 C++20 开始，标准库为 `vector` 提供了更便捷的 `std::erase` 和 `std::erase_if` 函数，可以直接使用，无需再写 `erase-remove` 惯用法。
+*   **示例**：
+    ```cpp
+    std::vector<int> vec = {1, 2, 3, 2, 5};
+
+    // 删除所有值为 2 的元素 (C++20)
+    std::erase(vec, 2); // vec 变为 {1, 3, 5}
+
+    // 删除所有偶数 (C++20)
+    std::erase_if(vec, [](int i) { return i % 2 == 0; });
+    ```
+
+ ##### 总结与对比
+| 方法 | 功能 | 注意事项 |
+| :--- | :--- | :--- |
+| `clear()` | 清空所有元素 | 不释放内存（`capacity` 不变） |
+| `pop_back()` | 删除最后一个元素 | 无 |
+| `erase(pos)` | 删除指定位置的元素 | 删除点之后的迭代器失效 |
+| `erase(first, last)` | 删除一个范围内的元素 | 删除点之后的迭代器失效 |
+| `erase-remove` 惯用法 | 删除所有等于某个值的元素 | 标准做法 |
+| `erase-remove_if` 惯用法 | 删除所有满足特定条件的元素 | 标准做法 |
+| `std::erase` (C++20) | 删除所有等于某个值的元素 | 更简洁，无需 `erase-remove` |
+| `std::erase_if` (C++20) | 删除所有满足特定条件的元素 | 更简洁，无需 `erase-remove_if` |
 
 算法与迭代器类别的关系（重要）
+
 不同算法要求迭代器具备不同能力：
 
 - `sort`：需要随机访问迭代器（只能用于 `vector`、`deque`、数组，不能用于 `list`）
