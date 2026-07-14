@@ -61,13 +61,13 @@ C++规定在创建一个变量和常量时，必须指出相应的数据类型�
 C++中能够表示整型的类型有一下几种方式，区别在于所占用内存空间不同：
 
 
-| 数据类型              | 占用空间                                        | 取值范围                                                                  |
-| :-------------------- | :---------------------------------------------- | :------------------------------------------------------------------------ |
-| `short`(短整型)       | 2字节                                           | (-2^15 ~ 2^15-1) (-32768~32767)                                           |
-| `int`(整型)           | 4字节                                           | (-2^31 ~ 2^31-1) 
-(-2147483648 ~ 2147483647)                                |
-| `long`(长整形)        | Windows为4字节，Linux为4字节(32位)，8字节(64位) | (-2^31 ~ 2^31-1) (-2147483648~21474836747)                                |
-| `long long`(长长整形) | 8字节                                           | (-2^63 ~ 2^63-1) （-9,223,372,036,854,775,808~9,223,372,036,854,775,807） |
+| 数据类型                   | 占用空间                                        | 取值范围                                                                  |
+| :------------------------- | :---------------------------------------------- | :------------------------------------------------------------------------ |
+| `short`(短整型)            | 2字节                                           | (-2^15 ~ 2^15-1) (-32768~32767)                                           |
+| `int`(整型)                | 4字节                                           | (-2^31 ~ 2^31-1)                                                          |
+| (-2147483648 ~ 2147483647) |                                                 |                                                                           |
+| `long`(长整形)             | Windows为4字节，Linux为4字节(32位)，8字节(64位) | (-2^31 ~ 2^31-1) (-2147483648~21474836747)                                |
+| `long long`(长长整形)      | 8字节                                           | (-2^63 ~ 2^63-1) （-9,223,372,036,854,775,808~9,223,372,036,854,775,807） |
 
 超过取值上限就会回到取值下限，没有特殊需求一般用`int`可以了。
 
@@ -260,7 +260,7 @@ bool类型只要是非0的值都代表真。
 | 运算符 | 术语 | 示例          | 结果    |
 | :----- | :--- | :------------ | :------ |
 | `&&`   | 与   | `true&&false` | `false` |
-| ``   | 或   | `true||false` | `true`  |
+| ``     | 或   | `true         |         |
 | `!`    | 非   | `!true`       | `false` |
 
 * **与 `&&`**：两边都为真才是真，只要有一个假就是假。示例：开关串联开关。
@@ -921,7 +921,7 @@ int main() {
 访问一维数组示例：
 
 ```cpp
- liang l1[3] = {
+liang l1[3] = {
         {1, 2, 3.0},
         {4, 5, 6.0},
         {7, 8, 9.0}
@@ -4096,33 +4096,37 @@ int main() {
 # C++提高编程
 
 本阶段主要针对C++泛型编程与STL技术进行讲解，探讨C++的深度应用。
+
 ## cin特别篇
+
 以下是 `cin`（即 `std::istream` 类型）常用的成员函数，包含语法和返回值说明。
 
 ---
 
 ### `cin` 常用成员函数速查表
 
-| 成员函数 | 语法 | 返回值 |
-|---------|------|--------|
-| **`get`**<br>(读取一个字符) | `cin.get()` | 返回读取的字符（`int` 类型，`EOF` 表示失败） |
-| **`get`**<br>(读取 C 字符串) | `cin.get(char* s, streamsize n)` | 返回 `cin` 自身（`istream&`），可链式调用 |
-| **`get`**<br>(读取到引用) | `cin.get(char& c)` | 返回 `cin` 自身（`istream&`） |
-| **`getline`** | `cin.getline(char* s, streamsize n, char delim = '\n')` | 返回 `cin` 自身（`istream&`） |
-| **`ignore`** | `cin.ignore(streamsize n = 1, int delim = EOF)` | 返回 `cin` 自身（`istream&`） |
-| **`peek`** | `cin.peek()` | 返回下一个字符（`int` 类型），但不从流中移除，`EOF` 表示流结束 |
-| **`putback`** | `cin.putback(char c)` | 返回 `cin` 自身（`istream&`），失败时设置 `failbit` |
-| **`read`** | `cin.read(char* s, streamsize n)` | 返回 `cin` 自身（`istream&`） |
-| **`gcount`** | `cin.gcount()` | 返回最后一次无格式输入操作实际提取的字符数（`streamsize` 类型） |
-| **`clear`** | `cin.clear(iostate state = goodbit)` | 返回 `void`（无返回值），用于清除/设置流状态标志 |
-| **`fail`** | `cin.fail()` | 返回 `bool`，若流发生非致命错误（如类型不匹配）则为 `true` |
-| **`good`** | `cin.good()` | 返回 `bool`，若流状态完全正常（无任何错误标志）则为 `true` |
-| **`eof`** | `cin.eof()` | 返回 `bool`，若已经到达文件末尾则为 `true` |
-| **`bad`** | `cin.bad()` | 返回 `bool`，若发生致命错误（如流缓冲区损坏）则为 `true` |
+
+| 成员函数                 | 语法                                                    | 返回值                                                          |
+| ------------------------ | ------------------------------------------------------- | --------------------------------------------------------------- |
+| **`get`**(读取一个字符)  | `cin.get()`                                             | 返回读取的字符（`int` 类型，`EOF` 表示失败）                    |
+| **`get`**(读取 C 字符串) | `cin.get(char* s, streamsize n)`                        | 返回`cin` 自身（`istream&`），可链式调用                        |
+| **`get`**(读取到引用)    | `cin.get(char& c)`                                      | 返回`cin` 自身（`istream&`）                                    |
+| **`getline`**            | `cin.getline(char* s, streamsize n, char delim = '\n')` | 返回`cin` 自身（`istream&`）                                    |
+| **`ignore`**             | `cin.ignore(streamsize n = 1, int delim = EOF)`         | 返回`cin` 自身（`istream&`）                                    |
+| **`peek`**               | `cin.peek()`                                            | 返回下一个字符（`int` 类型），但不从流中移除，`EOF` 表示流结束  |
+| **`putback`**            | `cin.putback(char c)`                                   | 返回`cin` 自身（`istream&`），失败时设置 `failbit`              |
+| **`read`**               | `cin.read(char* s, streamsize n)`                       | 返回`cin` 自身（`istream&`）                                    |
+| **`gcount`**             | `cin.gcount()`                                          | 返回最后一次无格式输入操作实际提取的字符数（`streamsize` 类型） |
+| **`clear`**              | `cin.clear(iostate state = goodbit)`                    | 返回`void`（无返回值），用于清除/设置流状态标志                 |
+| **`fail`**               | `cin.fail()`                                            | 返回`bool`，若流发生非致命错误（如类型不匹配）则为 `true`       |
+| **`good`**               | `cin.good()`                                            | 返回`bool`，若流状态完全正常（无任何错误标志）则为 `true`       |
+| **`eof`**                | `cin.eof()`                                             | 返回`bool`，若已经到达文件末尾则为 `true`                       |
+| **`bad`**                | `cin.bad()`                                             | 返回`bool`，若发生致命错误（如流缓冲区损坏）则为 `true`         |
 
 ---
 
 ### 说明
+
 - **返回 `istream&`** 的函数支持链式调用，例如 `cin.get(c).get();`
 - **无格式输入函数**（`get`, `getline`, `read`, `ignore` 等）不会跳过前导空白（除非指定了参数）。
 - `getline` 读取时会提取并丢弃分隔符（默认换行符），但分隔符不会被存入目标数组。
@@ -4160,7 +4164,9 @@ int main() {
     return 0;
 }
 ```
+
 防止输入不符合类型的示例
+
 ```cpp
 #include <limits>  // 为了使用 std::numeric_limits
 
@@ -4201,37 +4207,41 @@ float getValidFloat(const std::string& prompt) {
     }
 }
 ```
+
 ## cout特别篇
+
 以下是 `cout`（即 `std::ostream` 类型）常用的成员函数，包含语法和返回值说明。
 
 ---
 
 ### `cout` 常用成员函数速查表
 
-| 成员函数 | 语法 | 返回值 |
-|---------|------|--------|
-| **`put`** | `cout.put(char c)` | 返回 `cout` 自身（`ostream&`），可链式调用 |
-| **`write`** | `cout.write(const char* s, streamsize n)` | 返回 `cout` 自身（`ostream&`），输出 `s` 的前 `n` 个字符 |
-| **`flush`** | `cout.flush()` | 返回 `cout` 自身（`ostream&`），强制刷新输出缓冲区 |
-| **`tellp`** | `cout.tellp()` | 返回当前输出位置索引（`pos_type`，通常为 `int` 或 `long long`） |
-| **`seekp`** | `cout.seekp(pos_type pos)`<br>`cout.seekp(off_type off, ios_base::seekdir dir)` | 返回 `cout` 自身（`ostream&`），用于文件流；对 `cout` 通常无效 |
-| **`precision`** | `cout.precision(int new_precision)` | 返回**旧的**浮点数精度（`int`） |
-| **`width`** | `cout.width(int new_width)` | 返回**旧的**字段宽度（`int`） |
-| **`fill`** | `cout.fill(char new_fill)` | 返回**旧的**填充字符（`char`） |
-| **`setf`** | `cout.setf(ios_base::fmtflags flags)`<br>`cout.setf(ios_base::fmtflags flags, ios_base::fmtflags mask)` | 返回 `void`，设置格式标志 |
-| **`unsetf`** | `cout.unsetf(ios_base::fmtflags flags)` | 返回 `void`，清除格式标志 |
-| **`flags`** | `cout.flags()`<br>`cout.flags(ios_base::fmtflags new_flags)` | 无参：返回当前格式标志（`fmtflags`）<br>有参：设置新标志并返回旧的 |
-| **`copyfmt`** | `cout.copyfmt(const ios& rhs)` | 返回 `void`，从另一个流复制格式设置 |
-| **`good`** | `cout.good()` | 返回 `bool`，若流状态正常则为 `true` |
-| **`fail`** | `cout.fail()` | 返回 `bool`，若发生非致命错误（如输出失败）则为 `true` |
-| **`bad`** | `cout.bad()` | 返回 `bool`，若发生致命错误则为 `true` |
-| **`eof`** | `cout.eof()` | 返回 `bool`，对于 `cout` 通常无用（输出流无文件尾概念），但为兼容性存在 |
-| **`clear`** | `cout.clear(iostate state = goodbit)` | 返回 `void`，设置流状态 |
-| **`rdbuf`** | `cout.rdbuf()`<br>`cout.rdbuf(streambuf* sb)` | 无参：返回指向流缓冲区的指针（`streambuf*`）<br>有参：设置新缓冲区并返回旧的 |
+
+| 成员函数        | 语法                                                                                                | 返回值                                                                   |
+| --------------- | --------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| **`put`**       | `cout.put(char c)`                                                                                  | 返回`cout` 自身（`ostream&`），可链式调用                                |
+| **`write`**     | `cout.write(const char* s, streamsize n)`                                                           | 返回`cout` 自身（`ostream&`），输出 `s` 的前 `n` 个字符                  |
+| **`flush`**     | `cout.flush()`                                                                                      | 返回`cout` 自身（`ostream&`），强制刷新输出缓冲区                        |
+| **`tellp`**     | `cout.tellp()`                                                                                      | 返回当前输出位置索引（`pos_type`，通常为 `int` 或 `long long`）          |
+| **`seekp`**     | `cout.seekp(pos_type pos)``cout.seekp(off_type off, ios_base::seekdir dir)`                         | 返回`cout` 自身（`ostream&`），用于文件流；对 `cout` 通常无效            |
+| **`precision`** | `cout.precision(int new_precision)`                                                                 | 返回**旧的**浮点数精度（`int`）                                          |
+| **`width`**     | `cout.width(int new_width)`                                                                         | 返回**旧的**字段宽度（`int`）                                            |
+| **`fill`**      | `cout.fill(char new_fill)`                                                                          | 返回**旧的**填充字符（`char`）                                           |
+| **`setf`**      | `cout.setf(ios_base::fmtflags flags)``cout.setf(ios_base::fmtflags flags, ios_base::fmtflags mask)` | 返回`void`，设置格式标志                                                 |
+| **`unsetf`**    | `cout.unsetf(ios_base::fmtflags flags)`                                                             | 返回`void`，清除格式标志                                                 |
+| **`flags`**     | `cout.flags()``cout.flags(ios_base::fmtflags new_flags)`                                            | 无参：返回当前格式标志（`fmtflags`）有参：设置新标志并返回旧的           |
+| **`copyfmt`**   | `cout.copyfmt(const ios& rhs)`                                                                      | 返回`void`，从另一个流复制格式设置                                       |
+| **`good`**      | `cout.good()`                                                                                       | 返回`bool`，若流状态正常则为 `true`                                      |
+| **`fail`**      | `cout.fail()`                                                                                       | 返回`bool`，若发生非致命错误（如输出失败）则为 `true`                    |
+| **`bad`**       | `cout.bad()`                                                                                        | 返回`bool`，若发生致命错误则为 `true`                                    |
+| **`eof`**       | `cout.eof()`                                                                                        | 返回`bool`，对于 `cout` 通常无用（输出流无文件尾概念），但为兼容性存在   |
+| **`clear`**     | `cout.clear(iostate state = goodbit)`                                                               | 返回`void`，设置流状态                                                   |
+| **`rdbuf`**     | `cout.rdbuf()``cout.rdbuf(streambuf* sb)`                                                           | 无参：返回指向流缓冲区的指针（`streambuf*`）有参：设置新缓冲区并返回旧的 |
 
 ---
 
 ### 说明
+
 - **返回 `ostream&`** 的函数支持链式调用，例如 `cout.put('A').put('B');`
 - `precision`, `width`, `fill` 的**有参版本**返回**旧值**，无参版本返回当前值（但 `width` 无参版本为标准库提供，通常用 `cout.width()` 获取当前宽度）。
 - `setf` 和 `unsetf` 用于控制进制（`hex`, `dec`, `oct`）、对齐（`left`, `right`, `internal`）、浮点格式（`fixed`, `scientific`）等。
@@ -4276,14 +4286,16 @@ int main() {
 
 ### 对比 `cin` 和 `cout`
 
-| 项目 | `cin`（输入流） | `cout`（输出流） |
-|------|----------------|------------------|
-| 常用成员 | `get`, `getline`, `ignore`, `peek`, `putback` | `put`, `write`, `flush` |
-| 格式控制 | 无（输入一般不用格式） | `precision`, `width`, `fill`, `setf` |
-| 位置操作 | `tellg`, `seekg` | `tellp`, `seekp` |
-| 状态函数 | `good`, `fail`, `bad`, `eof`, `clear` | 完全相同（继承自 `ios_base`） |
+
+| 项目     | `cin`（输入流）                               | `cout`（输出流）                     |
+| -------- | --------------------------------------------- | ------------------------------------ |
+| 常用成员 | `get`, `getline`, `ignore`, `peek`, `putback` | `put`, `write`, `flush`              |
+| 格式控制 | 无（输入一般不用格式）                        | `precision`, `width`, `fill`, `setf` |
+| 位置操作 | `tellg`, `seekg`                              | `tellp`, `seekp`                     |
+| 状态函数 | `good`, `fail`, `bad`, `eof`, `clear`         | 完全相同（继承自`ios_base`）         |
 
 希望这个表格能帮你做好笔记！
+
 ## 1. 模板编程
 
 ### 1.1 模板的初概念
@@ -5304,7 +5316,9 @@ void print(int x) {
 }
 for_each(v.begin(), v.end(), print);   // 输出每个元素
 ```
+
 #### 排序算法sort完整说明
+
 在 C++ 标准库中，`std::sort` 算法用于对指定范围内的元素进行排序。它的最常用形式接受 **三个参数**：
 
 1. **第一个参数**（`first`）：指向待排序序列**起始位置**的迭代器（或指针）。
@@ -5315,13 +5329,15 @@ for_each(v.begin(), v.end(), print);   // 输出每个元素
 
 ##### 第三个参数（比较器）详解
 
-`comp` 是一个二元谓词（binary predicate），即它接受两个参数（通常为容器中的元素类型），并返回一个 `bool` 值。  
+`comp` 是一个二元谓词（binary predicate），即它接受两个参数（通常为容器中的元素类型），并返回一个 `bool` 值。
+
 - 如果 `comp(a, b)` 返回 `true`，则表示 **`a` 应该排在 `b` 前面**（即 `a` 小于 `b`，按此规则升序）。
 - 如果返回 `false`，则 `a` 排在 `b` 后面（或等价时保持相对顺序，但 `sort` 不保证稳定）。
 
 如果不提供第三个参数，`std::sort` 默认使用 `operator<` 进行比较，即升序排列。
 
 `comp` 可以是：
+
 - **普通函数**（全局函数或静态函数）
 - **函数对象**（重载了 `operator()` 的类对象）
 - **Lambda 表达式**（C++11 起）
@@ -5429,6 +5445,7 @@ int main() {
 ```
 
 ###### 输出结果（预期）：
+
 ```
 默认升序: 1 2 5 8 9 
 普通函数降序: 9 8 5 2 1 
@@ -5437,7 +5454,7 @@ Lambda 降序: 9 8 5 2 1
 按绝对值降序: -8 9 -5 2 1 
 按字符串长度升序: pie kiwi apple banana strawberry 
 按字符串长度降序: strawberry banana apple kiwi pie 
-按阈值分组排序: 7 9 2 3 4 
+按阈值分组排序: 7 9 2 3 4
 ```
 
 ---
@@ -5453,15 +5470,17 @@ Lambda 降序: 9 8 5 2 1
 
 ##### 总结
 
-| 参数顺序 | 名称       | 作用                                                         |
-|----------|------------|--------------------------------------------------------------|
-| 第1个    | `first`    | 指向排序范围的起始迭代器                                     |
-| 第2个    | `last`     | 指向排序范围的结尾（最后一个元素之后）                       |
-| 第3个    | `comp`     | **比较器**，定义排序规则（默认为 `operator<`，即升序）      |
+
+| 参数顺序 | 名称    | 作用                                                   |
+| -------- | ------- | ------------------------------------------------------ |
+| 第1个    | `first` | 指向排序范围的起始迭代器                               |
+| 第2个    | `last`  | 指向排序范围的结尾（最后一个元素之后）                 |
+| 第3个    | `comp`  | **比较器**，定义排序规则（默认为 `operator<`，即升序） |
 
 第三个参数是排序算法的核心扩展点，通过它你可以实现任意顺序的排序，而无需修改元素类型本身。
 
 #### 查找算法find
+
 针对“查找”，C++ 标准库提供了多种 `find` 系列算法，它们的参数和用法略有不同。为了和刚才的 `sort` 对应，你需要区分两种情况：
 
 - **`std::find`**：查找**具体的值**（第三个参数是要找的值，而不是函数）。
@@ -5480,6 +5499,7 @@ Lambda 降序: 9 8 5 2 1
 它逐个比较容器元素与 `value`，返回第一个匹配元素的迭代器；如果没找到，返回 `last`。
 
 ###### 示例（`std::find`）
+
 ```cpp
 #include <iostream>
 #include <vector>
@@ -5505,7 +5525,9 @@ int main() {
     return 0;
 }
 ```
+
 **输出：**
+
 ```
 找到了值: 30，位于索引: 2
 值 99 不存在
@@ -5526,6 +5548,7 @@ int main() {
 如果 `pred(*it)` 返回 `true`，则 `find_if` 返回该迭代器；否则返回 `last`。
 
 ###### 示例（使用普通函数作为第三个参数）
+
 ```cpp
 #include <iostream>
 #include <vector>
@@ -5560,6 +5583,7 @@ int main() {
 ```
 
 ###### 示例（使用 Lambda 表达式作为第三个参数）—— 最灵活
+
 Lambda 可以捕获外部变量，实现动态阈值，比普通函数更方便。
 
 ```cpp
@@ -5613,14 +5637,16 @@ std::cout << "第一个非偶数: " << *it << std::endl; // 输出 5
 
 ##### 对比总结表
 
-| 算法               | 参数1（起始） | 参数2（结束） | **参数3（核心）**                                                                 | 谓词类型        |
-| ------------------ | ------------- | ------------- | --------------------------------------------------------------------------------- | --------------- |
-| `std::sort`        | 迭代器        | 迭代器        | **二元谓词**：`bool comp(a, b)`，定义排序规则（a 是否应排在 b 前）               | 二元（2个参数） |
-| **`std::find`**    | 迭代器        | 迭代器        | **具体值**：`const T& value`，按 `operator==` 匹配                                | 无（比较值）    |
-| **`std::find_if`** | 迭代器        | 迭代器        | **一元谓词**：`bool pred(element)`，定义匹配条件（返回 true 即找到）             | 一元（1个参数） |
-| `std::find_if_not` | 迭代器        | 迭代器        | **一元谓词**：`bool pred(element)`，条件取反（返回 false 即找到）                | 一元（1个参数） |
+
+| 算法               | 参数1（起始） | 参数2（结束） | **参数3（核心）**                                                    | 谓词类型        |
+| ------------------ | ------------- | ------------- | -------------------------------------------------------------------- | --------------- |
+| `std::sort`        | 迭代器        | 迭代器        | **二元谓词**：`bool comp(a, b)`，定义排序规则（a 是否应排在 b 前）   | 二元（2个参数） |
+| **`std::find`**    | 迭代器        | 迭代器        | **具体值**：`const T& value`，按 `operator==` 匹配                   | 无（比较值）    |
+| **`std::find_if`** | 迭代器        | 迭代器        | **一元谓词**：`bool pred(element)`，定义匹配条件（返回 true 即找到） | 一元（1个参数） |
+| `std::find_if_not` | 迭代器        | 迭代器        | **一元谓词**：`bool pred(element)`，条件取反（返回 false 即找到）    | 一元（1个参数） |
 
 ---
+
 ##### 注意事项（和 sort 的第三个参数对比记忆）
 
 1. **参数数量不同**：`sort` 的比较器需要 **两个** 参数（互相比较），`find_if` 的条件只需要 **一个** 参数（检查自身）。
@@ -5630,87 +5656,100 @@ std::cout << "第一个非偶数: " << *it << std::endl; // 输出 5
 如果你需要查找**所有**满足条件的元素（而不是第一个），应使用 `std::copy_if` 配合容器，或使用循环调用 `find_if`。如果有这方面需求，可以接着问我！
 
 #### vector的删除操作
+
 删除 `std::vector` 容器里的元素，主要有以下几种方法，具体用哪个取决于你的需求。
 
 ##### 1. 删除所有元素：`clear()`
+
 这是清空整个容器最直接的方法。
-*   **功能**：移除 `vector` 中的所有元素。调用后，容器的大小（`size`）变为 0。
-*   **注意**：`clear()` **不会释放**容器已分配的内存（即容量 `capacity` 不变）。如果希望彻底释放内存，可以结合 `shrink_to_fit()` 使用。
-*   **示例**：
-    ```cpp
-    std::vector<int> vec = {1, 2, 3};
-    vec.clear(); // vec 变为空，但容量 (capacity) 可能仍是 3
-    ```
+
+* **功能**：移除 `vector` 中的所有元素。调用后，容器的大小（`size`）变为 0。
+* **注意**：`clear()` **不会释放**容器已分配的内存（即容量 `capacity` 不变）。如果希望彻底释放内存，可以结合 `shrink_to_fit()` 使用。
+* **示例**：
+  ```cpp
+  std::vector<int> vec = {1, 2, 3};
+  vec.clear(); // vec 变为空，但容量 (capacity) 可能仍是 3
+  ```
 
 ##### 2. 删除末尾元素：`pop_back()`
-*   **功能**：移除 `vector` 中的最后一个元素。
-*   **示例**：
-    ```cpp
-    std::vector<int> vec = {1, 2, 3};
-    vec.pop_back(); // vec 变为 {1, 2}
-    ```
+
+* **功能**：移除 `vector` 中的最后一个元素。
+* **示例**：
+  ```cpp
+  std::vector<int> vec = {1, 2, 3};
+  vec.pop_back(); // vec 变为 {1, 2}
+  ```
 
 ##### 3. 删除指定位置或范围的元素：`erase()`
-*   **功能**：删除单个元素或一个范围内的元素。
-*   **注意**：`erase()` 操作会导致被删除元素之后的所有迭代器失效。在循环中删除时，需要特别小心。
-*   **示例**：
-    ```cpp
-    std::vector<int> vec = {1, 2, 3, 4, 5};
 
-    // 删除单个元素：删除第 3 个元素（索引为 2）
-    vec.erase(vec.begin() + 2); // vec 变为 {1, 2, 4, 5}
+* **功能**：删除单个元素或一个范围内的元素。
+* **注意**：`erase()` 操作会导致被删除元素之后的所有迭代器失效。在循环中删除时，需要特别小心。
+* **示例**：
+  ```cpp
+  std::vector<int> vec = {1, 2, 3, 4, 5};
 
-    // 删除范围内的元素：删除第 2 到第 4 个元素（索引 1 到 3）
-    vec.erase(vec.begin() + 1, vec.begin() + 4); // vec 变为 {1, 5}
-    ```
+  // 删除单个元素：删除第 3 个元素（索引为 2）
+  vec.erase(vec.begin() + 2); // vec 变为 {1, 2, 4, 5}
+
+  // 删除范围内的元素：删除第 2 到第 4 个元素（索引 1 到 3）
+  vec.erase(vec.begin() + 1, vec.begin() + 4); // vec 变为 {1, 5}
+  ```
 
 ##### 4. 删除所有特定值的元素：`erase` + `remove` 惯用法
+
 这是 C++ 中删除所有等于某个特定值的元素的标准做法。
-*   **原理**：`std::remove` 会将所有不等于特定值的元素移到容器前部，并返回一个新的“逻辑末尾”迭代器。然后 `erase` 负责删除从这个“逻辑末尾”到实际末尾的所有元素。
-*   **示例**：
-    ```cpp
-    std::vector<int> vec = {1, 2, 3, 2, 5};
-    // 删除所有值为 2 的元素
-    vec.erase(std::remove(vec.begin(), vec.end(), 2), vec.end());
-    // vec 变为 {1, 3, 5}
-    ```
 
- ##### 5. 删除所有满足条件的元素：`erase` + `remove_if` 惯用法
+* **原理**：`std::remove` 会将所有不等于特定值的元素移到容器前部，并返回一个新的“逻辑末尾”迭代器。然后 `erase` 负责删除从这个“逻辑末尾”到实际末尾的所有元素。
+* **示例**：
+  ```cpp
+  std::vector<int> vec = {1, 2, 3, 2, 5};
+  // 删除所有值为 2 的元素
+  vec.erase(std::remove(vec.begin(), vec.end(), 2), vec.end());
+  // vec 变为 {1, 3, 5}
+  ```
+
+##### 5. 删除所有满足条件的元素：`erase` + `remove_if` 惯用法
+
 与上面的方法类似，但可以指定更复杂的删除条件。
-*   **示例**：删除所有偶数
-    ```cpp
-    std::vector<int> vec = {1, 2, 3, 4, 5};
-    // 删除所有偶数
-    vec.erase(std::remove_if(vec.begin(), vec.end(), 
-                             [](int i) { return i % 2 == 0; }), 
-              vec.end());
-    // vec 变为 {1, 3, 5}
-    ```
 
- ##### 6. C++20 及以后的新方法：`std::erase` 和 `std::erase_if`
+* **示例**：删除所有偶数
+  ```cpp
+  std::vector<int> vec = {1, 2, 3, 4, 5};
+  // 删除所有偶数
+  vec.erase(std::remove_if(vec.begin(), vec.end(), 
+                           [](int i) { return i % 2 == 0; }), 
+            vec.end());
+  // vec 变为 {1, 3, 5}
+  ```
+
+##### 6. C++20 及以后的新方法：`std::erase` 和 `std::erase_if`
+
 从 C++20 开始，标准库为 `vector` 提供了更便捷的 `std::erase` 和 `std::erase_if` 函数，可以直接使用，无需再写 `erase-remove` 惯用法。
-*   **示例**：
-    ```cpp
-    std::vector<int> vec = {1, 2, 3, 2, 5};
 
-    // 删除所有值为 2 的元素 (C++20)
-    std::erase(vec, 2); // vec 变为 {1, 3, 5}
+* **示例**：
+  ```cpp
+  std::vector<int> vec = {1, 2, 3, 2, 5};
 
-    // 删除所有偶数 (C++20)
-    std::erase_if(vec, [](int i) { return i % 2 == 0; });
-    ```
+  // 删除所有值为 2 的元素 (C++20)
+  std::erase(vec, 2); // vec 变为 {1, 3, 5}
 
- ##### 总结与对比
-| 方法 | 功能 | 注意事项 |
-| :--- | :--- | :--- |
-| `clear()` | 清空所有元素 | 不释放内存（`capacity` 不变） |
-| `pop_back()` | 删除最后一个元素 | 无 |
-| `erase(pos)` | 删除指定位置的元素 | 删除点之后的迭代器失效 |
-| `erase(first, last)` | 删除一个范围内的元素 | 删除点之后的迭代器失效 |
-| `erase-remove` 惯用法 | 删除所有等于某个值的元素 | 标准做法 |
-| `erase-remove_if` 惯用法 | 删除所有满足特定条件的元素 | 标准做法 |
-| `std::erase` (C++20) | 删除所有等于某个值的元素 | 更简洁，无需 `erase-remove` |
-| `std::erase_if` (C++20) | 删除所有满足特定条件的元素 | 更简洁，无需 `erase-remove_if` |
+  // 删除所有偶数 (C++20)
+  std::erase_if(vec, [](int i) { return i % 2 == 0; });
+  ```
+
+##### 总结与对比
+
+
+| 方法                     | 功能                       | 注意事项                      |
+| :----------------------- | :------------------------- | :---------------------------- |
+| `clear()`                | 清空所有元素               | 不释放内存（`capacity` 不变） |
+| `pop_back()`             | 删除最后一个元素           | 无                            |
+| `erase(pos)`             | 删除指定位置的元素         | 删除点之后的迭代器失效        |
+| `erase(first, last)`     | 删除一个范围内的元素       | 删除点之后的迭代器失效        |
+| `erase-remove` 惯用法    | 删除所有等于某个值的元素   | 标准做法                      |
+| `erase-remove_if` 惯用法 | 删除所有满足特定条件的元素 | 标准做法                      |
+| `std::erase` (C++20)     | 删除所有等于某个值的元素   | 更简洁，无需`erase-remove`    |
+| `std::erase_if` (C++20)  | 删除所有满足特定条件的元素 | 更简洁，无需`erase-remove_if` |
 
 算法与迭代器类别的关系（重要）
 
@@ -5761,20 +5800,20 @@ std::cout << "第一个非偶数: " << *it << std::endl; // 输出 5
 你以为只有一个 iterator？不，每个容器其实提供了 四种：
 
 
-| 类型                   | 写法                                | 能读？ | 能写？ | 遍历方向 |
-| ---------------------- | ----------------------------------- | ------ | ------ | -------- |
-| iterator               | vector<int>::iterator               | ✅     | ✅     | 正向     |
-| const_iterator         | vector<int>::const_iterator         | ✅     | ❌     | 正向     |
-| reverse_iterator       | vector<int>::reverse_iterator       | ✅     | ✅     | 反向     |
-| const_reverse_iterator | vector<int>::const_reverse_iterator | ✅     | ❌     | 反向     |
+| 类型                   | 写法                           | 能读？ | 能写？ | 遍历方向 |
+| ---------------------- | ------------------------------ | ------ | ------ | -------- |
+| iterator               | vector::iterator               | ✅     | ✅     | 正向     |
+| const_iterator         | vector::const_iterator         | ✅     | ❌     | 正向     |
+| reverse_iterator       | vector::reverse_iterator       | ✅     | ✅     | 反向     |
+| const_reverse_iterator | vector::const_reverse_iterator | ✅     | ❌     | 反向     |
 
 
-| 具体类型                            | 所属迭代器类别             | 支持的操作（举例）                                       |
-| ----------------------------------- | -------------------------- | -------------------------------------------------------- |
-| vector<int>::iterator               | 随机访问迭代器             | ++, --, +=3, it1 - it2, it[2], <, > 等                   |
-| vector<int>::const_iterator         | 随机访问迭代器（只读）     | 同上，但不可写                                           |
-| vector<int>::reverse_iterator       | 随机访问迭代器（反向）     | ++ 实际上是向前移动（走向 rend()），但同样支持 +=n、- 等 |
-| vector<int>::const_reverse_iterator | 随机访问迭代器（反向只读） | 同上，但不可写                                           |
+| 具体类型                       | 所属迭代器类别             | 支持的操作（举例）                                       |
+| ------------------------------ | -------------------------- | -------------------------------------------------------- |
+| vector::iterator               | 随机访问迭代器             | ++, --, +=3, it1 - it2, it[2], <, > 等                   |
+| vector::const_iterator         | 随机访问迭代器（只读）     | 同上，但不可写                                           |
+| vector::reverse_iterator       | 随机访问迭代器（反向）     | ++ 实际上是向前移动（走向 rend()），但同样支持 +=n、- 等 |
+| vector::const_reverse_iterator | 随机访问迭代器（反向只读） | 同上，但不可写                                           |
 
 但作为初学者，你只需要知道：
 
@@ -6384,101 +6423,111 @@ for(...外层迭代器...) {      // 遍历每个小盒子
 ## 3.0
 
 ### 3.1 string容器
+
 #### string常用成员函数和操作符
+
 以下是 `std::string` 常用的成员函数，包含语法和返回值说明，方便你做笔记。
 
 ---
 
 ##### `std::string` 常用成员函数速查表
 
-> 头文件：`#include <string>`  
+> 头文件：`#include <string>`
 > 注意：`std::string` 的成员函数数量较多，下表列出最常用的。
 
 ###### 一、构造与赋值
 
-| 成员函数 | 语法 | 返回值 | 说明 |
-|---------|------|--------|------|
-| **构造函数** | `string()` | — | 创建空字符串 |
-| | `string(const char* s)` | — | 从 C 字符串构造 |
-| | `string(const string& str)` | — | 拷贝构造 |
-| | `string(size_t n, char c)` | — | 用 n 个字符 c 构造 |
-| **`assign`** | `str.assign(const char* s)` | `string&` | 重新赋值，返回自身引用 |
-| | `str.assign(size_t n, char c)` | `string&` | 赋值为 n 个 c |
+
+| 成员函数     | 语法                           | 返回值    | 说明                   |
+| ------------ | ------------------------------ | --------- | ---------------------- |
+| **构造函数** | `string()`                     | —        | 创建空字符串           |
+|              | `string(const char* s)`        | —        | 从 C 字符串构造        |
+|              | `string(const string& str)`    | —        | 拷贝构造               |
+|              | `string(size_t n, char c)`     | —        | 用 n 个字符 c 构造     |
+| **`assign`** | `str.assign(const char* s)`    | `string&` | 重新赋值，返回自身引用 |
+|              | `str.assign(size_t n, char c)` | `string&` | 赋值为 n 个 c          |
 
 ###### 二、容量相关
 
-| 成员函数 | 语法 | 返回值 | 说明 |
-|---------|------|--------|------|
-| **`size` / `length`** | `str.size()`<br>`str.length()` | `size_t` | 返回字符串中字符个数（不含 `\0`） |
-| **`capacity`** | `str.capacity()` | `size_t` | 返回当前已分配的存储空间大小 |
-| **`empty`** | `str.empty()` | `bool` | 字符串为空返回 `true` |
-| **`resize`** | `str.resize(size_t n)`<br>`str.resize(size_t n, char c)` | `void` | 改变字符串长度为 n，多删少补（补 c 或默认 `\0`） |
-| **`reserve`** | `str.reserve(size_t n)` | `void` | 预留至少 n 个字符的存储空间 |
-| **`shrink_to_fit`** (C++11) | `str.shrink_to_fit()` | `void` | 请求减小 capacity 以匹配 size |
+
+| 成员函数                    | 语法                                                 | 返回值   | 说明                                            |
+| --------------------------- | ---------------------------------------------------- | -------- | ----------------------------------------------- |
+| **`size` / `length`**       | `str.size()``str.length()`                           | `size_t` | 返回字符串中字符个数（不含`\0`）                |
+| **`capacity`**              | `str.capacity()`                                     | `size_t` | 返回当前已分配的存储空间大小                    |
+| **`empty`**                 | `str.empty()`                                        | `bool`   | 字符串为空返回`true`                            |
+| **`resize`**                | `str.resize(size_t n)``str.resize(size_t n, char c)` | `void`   | 改变字符串长度为 n，多删少补（补 c 或默认`\0`） |
+| **`reserve`**               | `str.reserve(size_t n)`                              | `void`   | 预留至少 n 个字符的存储空间                     |
+| **`shrink_to_fit`** (C++11) | `str.shrink_to_fit()`                                | `void`   | 请求减小 capacity 以匹配 size                   |
 
 ###### 三、元素访问
 
-| 成员函数 | 语法 | 返回值 | 说明 |
-|---------|------|--------|------|
-| **`operator[]`** | `str[pos]` | `char&` (const 版本为 `const char&`) | 下标访问，不检查边界 |
-| **`at`** | `str.at(pos)` | `char&` (const 版本 `const char&`) | 边界检查，越界抛出 `out_of_range` |
-| **`front`** | `str.front()` | `char&` | 返回第一个字符的引用 |
-| **`back`** | `str.back()` | `char&` | 返回最后一个字符的引用 |
-| **`data`** | `str.data()` | `char*` (C++11 后结尾有 `\0`) | 返回底层字符数组指针 |
-| **`c_str`** | `str.c_str()` | `const char*` | 返回 C 风格字符串（以 `\0` 结尾） |
+
+| 成员函数         | 语法          | 返回值                               | 说明                             |
+| ---------------- | ------------- | ------------------------------------ | -------------------------------- |
+| **`operator[]`** | `str[pos]`    | `char&` (const 版本为 `const char&`) | 下标访问，不检查边界             |
+| **`at`**         | `str.at(pos)` | `char&` (const 版本 `const char&`)   | 边界检查，越界抛出`out_of_range` |
+| **`front`**      | `str.front()` | `char&`                              | 返回第一个字符的引用             |
+| **`back`**       | `str.back()`  | `char&`                              | 返回最后一个字符的引用           |
+| **`data`**       | `str.data()`  | `char*` (C++11 后结尾有 `\0`)        | 返回底层字符数组指针             |
+| **`c_str`**      | `str.c_str()` | `const char*`                        | 返回 C 风格字符串（以`\0` 结尾） |
 
 ###### 四、修改操作
 
-| 成员函数 | 语法 | 返回值 | 说明 |
-|---------|------|--------|------|
-| **`operator+=`** | `str += ch`<br>`str += "abc"`<br>`str += another_str` | `string&` | 追加单个字符、C 字符串或 string |
-| **`append`** | `str.append(const char* s)` | `string&` | 追加字符串 |
-| | `str.append(size_t n, char c)` | `string&` | 追加 n 个 c |
-| **`push_back`** | `str.push_back(char c)` | `void` | 追加一个字符 |
-| **`pop_back`** (C++11) | `str.pop_back()` | `void` | 删除最后一个字符 |
-| **`insert`** | `str.insert(pos, const char* s)` | `string&` | 在位置 pos 之前插入字符串 |
-| | `str.insert(pos, size_t n, char c)` | `string&` | 插入 n 个 c |
-| **`erase`** | `str.erase(pos, len = npos)` | `string&` | 从 pos 开始删除 len 个字符 |
-| | `str.erase(iterator first, iterator last)` | `iterator` | 删除迭代器区间 |
-| **`replace`** | `str.replace(pos, len, const char* s)` | `string&` | 将 [pos, pos+len) 替换为 s |
-| **`clear`** | `str.clear()` | `void` | 清空字符串，size 变为 0 |
-| **`swap`** | `str.swap(other_str)` | `void` | 交换两个字符串的内容 |
+
+| 成员函数               | 语法                                          | 返回值     | 说明                            |
+| ---------------------- | --------------------------------------------- | ---------- | ------------------------------- |
+| **`operator+=`**       | `str += ch``str += "abc"``str += another_str` | `string&`  | 追加单个字符、C 字符串或 string |
+| **`append`**           | `str.append(const char* s)`                   | `string&`  | 追加字符串                      |
+|                        | `str.append(size_t n, char c)`                | `string&`  | 追加 n 个 c                     |
+| **`push_back`**        | `str.push_back(char c)`                       | `void`     | 追加一个字符                    |
+| **`pop_back`** (C++11) | `str.pop_back()`                              | `void`     | 删除最后一个字符                |
+| **`insert`**           | `str.insert(pos, const char* s)`              | `string&`  | 在位置 pos 之前插入字符串       |
+|                        | `str.insert(pos, size_t n, char c)`           | `string&`  | 插入 n 个 c                     |
+| **`erase`**            | `str.erase(pos, len = npos)`                  | `string&`  | 从 pos 开始删除 len 个字符      |
+|                        | `str.erase(iterator first, iterator last)`    | `iterator` | 删除迭代器区间                  |
+| **`replace`**          | `str.replace(pos, len, const char* s)`        | `string&`  | 将 [pos, pos+len) 替换为 s      |
+| **`clear`**            | `str.clear()`                                 | `void`     | 清空字符串，size 变为 0         |
+| **`swap`**             | `str.swap(other_str)`                         | `void`     | 交换两个字符串的内容            |
 
 ###### 五、查找与子串
 
-| 成员函数 | 语法 | 返回值 | 说明 |
-|---------|------|--------|------|
-| **`find`** | `str.find(const string& sub, pos = 0)` | `size_t` | 从 pos 开始查找子串，返回第一次出现的位置，未找到返回 `npos` |
-| | `str.find(const char* s, pos = 0)` | `size_t` | 同上 |
-| | `str.find(char c, pos = 0)` | `size_t` | 查找字符 |
-| **`rfind`** | `str.rfind(...)` | `size_t` | 从右向左查找 |
-| **`find_first_of`** | `str.find_first_of(const char* s, pos = 0)` | `size_t` | 查找第一个出现在 s 中的字符 |
-| **`find_last_of`** | 类似 | `size_t` | 最后一个出现在 s 中的字符 |
-| **`find_first_not_of`** | 类似 | `size_t` | 第一个不在 s 中的字符 |
-| **`substr`** | `str.substr(pos = 0, len = npos)` | `string` | 返回子串（从 pos 开始，最多 len 个字符） |
+
+| 成员函数                | 语法                                        | 返回值   | 说明                                                        |
+| ----------------------- | ------------------------------------------- | -------- | ----------------------------------------------------------- |
+| **`find`**              | `str.find(const string& sub, pos = 0)`      | `size_t` | 从 pos 开始查找子串，返回第一次出现的位置，未找到返回`npos` |
+|                         | `str.find(const char* s, pos = 0)`          | `size_t` | 同上                                                        |
+|                         | `str.find(char c, pos = 0)`                 | `size_t` | 查找字符                                                    |
+| **`rfind`**             | `str.rfind(...)`                            | `size_t` | 从右向左查找                                                |
+| **`find_first_of`**     | `str.find_first_of(const char* s, pos = 0)` | `size_t` | 查找第一个出现在 s 中的字符                                 |
+| **`find_last_of`**      | 类似                                        | `size_t` | 最后一个出现在 s 中的字符                                   |
+| **`find_first_not_of`** | 类似                                        | `size_t` | 第一个不在 s 中的字符                                       |
+| **`substr`**            | `str.substr(pos = 0, len = npos)`           | `string` | 返回子串（从 pos 开始，最多 len 个字符）                    |
 
 ###### 六、比较与转换
 
-| 成员函数 | 语法 | 返回值 | 说明 |
-|---------|------|--------|------|
-| **`compare`** | `str.compare(const string& s)` | `int` | 相等返回 0；小于返回负值；大于返回正值 |
-| | `str.compare(pos, len, s)` | `int` | 比较 str 的子串与 s |
-| **`stoi` / `stol` / `stod`** | 自由函数，非成员 | — | 字符串转数字（`std::stoi(str)`） |
-| **`to_string`** | 自由函数 | `string` | 数字转字符串（`std::to_string(123)`） |
+
+| 成员函数                     | 语法                           | 返回值   | 说明                                   |
+| ---------------------------- | ------------------------------ | -------- | -------------------------------------- |
+| **`compare`**                | `str.compare(const string& s)` | `int`    | 相等返回 0；小于返回负值；大于返回正值 |
+|                              | `str.compare(pos, len, s)`     | `int`    | 比较 str 的子串与 s                    |
+| **`stoi` / `stol` / `stod`** | 自由函数，非成员               | —       | 字符串转数字（`std::stoi(str)`）       |
+| **`to_string`**              | 自由函数                       | `string` | 数字转字符串（`std::to_string(123)`）  |
 
 ###### 七、迭代器
 
-| 成员函数 | 语法 | 返回值 | 说明 |
-|---------|------|--------|------|
-| **`begin` / `end`** | `str.begin()`<br>`str.end()` | `iterator` / `const_iterator` | 返回起始/末尾（最后一个字符之后）迭代器 |
-| **`rbegin` / `rend`** | `str.rbegin()`<br>`str.rend()` | `reverse_iterator` | 反向迭代器 |
+
+| 成员函数              | 语法                       | 返回值                        | 说明                                    |
+| --------------------- | -------------------------- | ----------------------------- | --------------------------------------- |
+| **`begin` / `end`**   | `str.begin()``str.end()`   | `iterator` / `const_iterator` | 返回起始/末尾（最后一个字符之后）迭代器 |
+| **`rbegin` / `rend`** | `str.rbegin()``str.rend()` | `reverse_iterator`            | 反向迭代器                              |
 
 ---
 
 ##### 常用静态成员
 
-| 常量 | 值 | 说明 |
-|------|---|------|
+
+| 常量       | 值                               | 说明                                 |
+| ---------- | -------------------------------- | ------------------------------------ |
 | **`npos`** | `static const size_t npos = -1;` | 表示“直到结尾”或“未找到”的特殊值 |
 
 ---
@@ -6530,10 +6579,11 @@ int main() {
 
 ##### 总结记忆口诀
 
-> **构造赋值容量查，访问修改迭代抓。  
+> **构造赋值容量查，访问修改迭代抓。
 > 查找子串常比较，npos 表示未找到它。**
 
 希望这份笔记对你有帮助！
+
 #### 3.1.1 string基本概念
 
 本质：
@@ -6587,7 +6637,6 @@ string& assign(const char* s, size_t n); // assign方法，使用C风格字符�
 string& assign(const string& str, size_t pos, size_t n); // assign方法，使用另一个string对象str的pos位置开始的n个字符来赋值给当前字符串
 string& assign(initializer_list<char> il); // assign方法，使用字符列表来赋值给当前字符串，例如：s.assign({'H', 'e', 'l', 'l', 'o'});
 string& assign(string&& str) noexcept; // 移动assign方法，使用另一个string对象str的资源来赋值给当前字符串，避免不必要的复制，提高性能
-
 ```
 
 assign是string类的一个成员函数，用于给字符串赋值。它提供了多种重载形式，可以接受不同类型的参数来赋值给字符串对象。assign方法的作用与赋值运算符（operator=）类似，但它提供了更多的灵活性和功能，例如可以指定分配器来管理内存，或者使用移动语义来提高性能。通过assign方法，你可以方便地将一个字符串对象、C风格字符串、字符列表等赋值给另一个字符串对象，同时还可以控制内存管理和性能优化。
@@ -6603,10 +6652,10 @@ s.assign("Hello, World!");
 string s;
 s.assign("Hello, ").assign("World!"); // 先赋值 "Hello, "，再赋值 "World!"
 cout << s; // 输出 "World!"// 最终s的值是 "World!"，因为第二次assign覆盖了第一次的赋值
-
 ```
 
 ### 3.1.4 sting字符串拼接
+
 功能描述：
 将新增字符串拼接到现有字符串的末尾，形成一个新的字符串。
 
@@ -6620,3 +6669,108 @@ string& append(size_t n, char c); // append 方法，接受一个字符和一个
 string& append(const char* s, size_t n); // append 方法，接受一个 C 风格字符串和一个数量作为参数，将该字符串的前 n 个字符追加到当前字符串的末尾，并返回当前字符串对象的引用。
 string& append(const string& str, int pos, size_t n); //将另一个字符串对象str从pos位置开始的n个字符追加到当前字符串的末尾，并返回当前字符串对象的引用。
 void push_back(char c); // push_back 方法，接受一个字符作为参数，将其追加到当前字符串的末尾，无返回值。
+
+示例代码：
+
+```cpp
+string str1 = "Hello";
+string str2 = " World"; 
+//创建一个char*类型的字符串
+const char* s = " Hello";
+char arr[10] = " World";
+//当前数组前五个字符是"World"，后面是'\0'，所以输出时只会显示前五个字符
+str1 += str2; // 使用 += 运算符拼接字符串
+str1.append("!"); // 使用 append 方法拼接字符串
+str1.push_back('?'); // 使用 push_back 方法拼接字符
+str1.append(3,s)// 使用 append 方法拼接 C 风格字符串的前 3 个字符
+cout << str1; // 输出 "Hello World!?"
+```
+
+### 3.1.4.1 size_t特殊讲解
+
+把 `size_t` 搞懂，是 C++ 新手跨越“水土不服”期的关键一步。别把它想复杂了，我用**快递柜**的比喻给你讲，保证一听就懂：
+
+#### 1. 它到底是什么？（快递柜编号）
+
+想象你家楼下的快递柜。柜子有几百个格子，每个格子都有一个**编号**（0， 1， 2， 3 ...）。这个编号**永远不可能是负数**（不存在“-1号格子”），而且它最大能编到多少号，取决于这个快递柜有多大。
+
+**`size_t` 就是“快递柜的编号类型”**。
+
+- 它**只能存正整数**（无符号）。
+- 它专门用来表示**物体的个数**、**内存的大小**、**字符串或数组的长度**，以及**下标索引**（比如 `str[0]` 中的 0）。
+
+#### 2. 为什么要搞出 `size_t`，直接用 `int` 不行吗？（核心原因）
+
+很多初学者会问：“我平时用 `int` 当循环变量不也挺好的？” 原因有两条，极其重要：
+
+- **原因一（保证够用）**：`int` 在 32 位系统下通常是 4 字节，最大 21 亿。这看起来很大，但如果你在 64 位系统下申请一块超大内存（比如 5GB），用 `int` 存不下它的长度（会溢出）。而 `size_t` 很“狡猾”，**它在 32 位系统下是 4 字节，在 64 位系统下自动变成 8 字节**。它永远能保证“装得下当前系统支持的最大长度”。
+- **原因二（语义正确）**：长度和个数永远不可能是负数。用 `int`（有符号）意味着有一半的数字范围（负数）被浪费了。用 `size_t` 更符合逻辑。
+
+#### 3. 为什么它会在查找中坑到你？（结合你的笔记）
+
+这就是你刚才笔记里提到的关键点。`string::find` 返回的是 `size_t` 类型。
+
+- 如果找到了，返回位置 0、1、2...（正数）。
+- 如果没找到，返回 `string::npos`，这个值其实是 `size_t` 能表示的**最大值**（相当于 0 - 1 的溢出值，即 18446744073709551615）。
+
+**致命的误区来了：**
+很多新手会写 `int pos = str.find("abc");` 然后判断 `if (pos == -1)`。这在大多数编译器下能跑通（因为隐式转换），但编译器会给你**疯狂的警告**（有符号和无符号不匹配）。
+更可怕的是，如果你写 `if (pos < 0)`，这个条件**永远为假**，因为 `size_t` 是无符号的，它永远大于等于 0！
+
+#### 4. 作为学习者，记住 3 条“避坑铁律”
+
+1. **遇到长度、个数、下标，优先用 `size_t`，别用 `int`。**
+
+   - 写循环时：`for (size_t i = 0; i < str.size(); ++i)` 是正途。
+2. **用 `size_t` 做循环时，**千万小心往 0 减**！
+
+   - 错误写法：`for (size_t i = 10; i >= 0; --i)` —— 这会是**死循环**，因为 `i` 减到 0 后再减 1，会变成天文数字（溢出），依然满足 `>=0`。
+   - 正确写法：`for (size_t i = 10; i > 0; --i)`，或者用 `int` 做递减循环。
+3. **判断查找结果，直接用 `== string::npos`，别自作聪明去比较 `-1` 或 `< 0`。**
+
+   - 正确写法：`if (pos == string::npos)`。
+
+#### 总结一句人话：
+
+**`size_t` 就是一把“自动适配系统位数”的尺子，专门用来量长度、数个数。** 你只要记住“**长度无符号**”这五个字，以后看到函数参数或返回值是 `size_t`，就把脑子里 `int` 的负数概念抹掉，专门用它来数数就行了。
+
+### 3.1.5 string中的查找与替换
+
+功能描述：
+查找：查找指定字符串是否存在
+替换：将指定字符串替换为新的字符串
+函数原型：
+size_t find(const string& str, size_t pos = 0) const; // find 方法，查找指定字符串在当前字符串中首次出现的位置，从pos位置开始查找，返回位置索引，未找到则返回string::npos
+size_t find(const char* s, size_t pos = 0) const; // find 方法，查找指定 C 风格字符串在当前字符串中首次出现的位置，从pos位置开始查找，返回位置索引，未找到则返回string::npos
+size_t find(const char* s, size_t pos, size_t n) const; // find 方法，查找指定 C 风格字符串的前 n 个字符在当前字符串中首次出现的位置，从pos位置开始查找，返回位置索引，未找到则返回string::npos
+size_t find(char c, size_t pos = 0) const; // find 方法，查找指定字符在当前字符串中首次出现的位置，从pos位置开始查找，返回位置索引，未找到则返回string::npos
+size_t rfind(const string& str, size_t pos = npos) const; // rfind 方法，查找指定字符串在当前字符串中最后一次出现的位置，从pos位置开始向前查找，返回位置索引，未找到则返回string::npos
+size_t rfind(const char* s, size_t pos = npos) const; // rfind 方法，查找指定 C 风格字符串在当前字符串中最后一次出现的位置，从pos位置开始向前查找，返回位置索引，未找到则返回string::npos
+size_t rfind(const char* s, size_t pos, size_t n) const; // rfind 方法，查找指定 C 风格字符串的前 n 个字符在当前字符串中最后一次出现的位置，从pos位置开始向前查找，返回位置索引，未找到则返回string::npos
+size_t rfind(char c, size_t pos = npos) const; // rfind 方法，查找指定字符在当前字符串中最后一次出现的位置，从pos位置开始向前查找，返回位置索引，未找到则返回string::npos
+string& replace(size_t pos, size_t len, const string& str); // replace 方法，将当前字符串中从pos位置开始的len个字符替换为指定字符串str，返回当前字符串对象的引用
+string& replace(size_t pos, size_t len, const char* s); // replace 方法，将当前字符串中从pos位置开始的len个字符替换为指定 C 风格字符串s，返回当前字符串对象的引用
+
+string::npos是string类的一个静态常量，表示“未找到”的特殊值。它的值通常被定义为-1（在无符号类型中表示最大值），用于指示查找操作未成功找到目标字符串或字符。
+示例代码：
+
+```cpp
+string str = "Hello, World!";
+// 查找字符串
+int pos1 = str.find("World"); // 查找 "World" 的位置
+if (pos1 != string::npos) {
+    cout << "Found 'World' at position: " << pos1 << endl; // 输出位置
+} else {
+    cout << "'World' not found." << endl;
+}
+int pos2 = str.rfind("o"); // 查找最后一次出现的 "o" 的位置
+if (pos2 != string::npos) {
+    cout << "Last 'o' found at position: " << pos2 << endl; // 输出位置
+} else {
+    cout << "'o' not found." << endl;
+}
+string str2 = "test1 test2 test3";
+// 替换字符串
+str2.replace(5, 5, "example"); // 将从位置5开始的5个字符替换为 "example"
+cout << "After replacement: " << str2 << endl; // 输出替换后的字符串
+```
