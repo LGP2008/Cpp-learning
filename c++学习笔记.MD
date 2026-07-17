@@ -6774,3 +6774,19 @@ string str2 = "test1 test2 test3";
 str2.replace(5, 5, "example"); // 将从位置5开始的5个字符替换为 "example"
 cout << "After replacement: " << str2 << endl; // 输出替换后的字符串
 ```
+### 3.1.6 string中的字符串比较
+功能描述：
+比较两个字符串的大小关系，返回比较结果。
+利用ASCII码值进行比较，逐个字符比较，直到找到不同的字符或到达字符串末尾。
+返回值解释：
+返回值为负数表示当前字符串小于指定字符串，
+返回值为0表示相等，
+返回值为正数表示当前字符串大于指定字符串。
+
+函数原型：
+int compare(const string& str) const; // compare 方法，比较当前字符串与指定字符串str的大小关系，返回值为负数表示当前字符串小于str，返回值为0表示相等，返回值为正数表示当前字符串大于str
+int compare(size_t pos, size_t len, const string& str) const; // compare 方法，比较当前字符串从pos位置开始的len个字符与指定字符串str的大小关系，返回值为负数表示当前字符串小于str，返回值为0表示相等，返回值为正数表示当前字符串大于str
+int compare(size_t pos, size_t len, const string& str, size_t subpos, size_t sublen) const; // compare 方法，比较当前字符串从pos位置开始的len个字符与指定字符串str从subpos位置开始的sublen个字符的大小关系，返回值为负数表示当前字符串小于str，返回值为0表示相等，返回值为正数表示当前字符串大于str
+int compare(const char* s) const; // compare 方法，比较当前字符串与指定 C 风格字符串s的大小关系，返回值为负数表示当前字符串小于s，返回值为0表示相等，返回值为正数表示当前字符串大于s
+int compare(size_t pos, size_t len, const char* s) const; // compare 方法，比较当前字符串从pos位置开始的len个字符与指定 C 风格字符串s的大小关系，返回值为负数表示当前字符串小于s，返回值为0表示相等，返回值为正数表示当前字符串大于s
+int compare(size_t pos, size_t len, const char* s, size_t n) const; // compare 方法，比较当前字符串从pos位置开始的len个字符与指定 C 风格字符串s的前n个字符的大小关系，返回值为负数表示当前字符串小于s，返回值为0表示相等，返回值为正数表示当前字符串大于s
