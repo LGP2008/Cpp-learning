@@ -5354,6 +5354,7 @@ for_each(v.begin(), v.end(), print);   // 输出每个元素
 #include <vector>
 #include <algorithm>
 #include <string>
+#include <cmath>
 
 // 1. 普通函数：降序比较（从大到小）
 bool descCompare(int a, int b) {
@@ -5590,6 +5591,7 @@ Lambda 可以捕获外部变量，实现动态阈值，比普通函数更方便�
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <string>
 
 int main() {
     std::vector<int> vec = {2, 4, 6, 8, 9, 12};
@@ -6790,3 +6792,294 @@ int compare(size_t pos, size_t len, const string& str, size_t subpos, size_t sub
 int compare(const char* s) const; // compare 方法，比较当前字符串与指定 C 风格字符串s的大小关系，返回值为负数表示当前字符串小于s，返回值为0表示相等，返回值为正数表示当前字符串大于s
 int compare(size_t pos, size_t len, const char* s) const; // compare 方法，比较当前字符串从pos位置开始的len个字符与指定 C 风格字符串s的大小关系，返回值为负数表示当前字符串小于s，返回值为0表示相等，返回值为正数表示当前字符串大于s
 int compare(size_t pos, size_t len, const char* s, size_t n) const; // compare 方法，比较当前字符串从pos位置开始的len个字符与指定 C 风格字符串s的前n个字符的大小关系，返回值为负数表示当前字符串小于s，返回值为0表示相等，返回值为正数表示当前字符串大于s
+
+示例代码：
+
+```cpp
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+    string s1 = "apple";
+    string s2 = "banana";
+    string s3 = "apple";
+
+    // 直接比较两个 string
+    int ret1 = s1.compare(s2); // 比较 "apple" 和 "banana"
+    cout << ret1 << endl;      // 输出负数，说明 "apple" < "banana"
+
+    int ret2 = s1.compare(s3); // 比较 "apple" 和 "apple"
+    cout << ret2 << endl;      // 输出 0，说明两者相等
+
+    int ret3 = s2.compare(s1); // 比较 "banana" 和 "apple"
+    cout << ret3 << endl;      // 输出正数，说明 "banana" > "apple"
+
+    // 比较字符串中的一段子串
+    string str = "Hello, World!";
+    int ret4 = str.compare(0, 5, "Hello"); // 从下标 0 开始比较 5 个字符
+    cout << ret4 << endl;                  // 输出 0，说明前 5 个字符和 "Hello" 相同
+
+    // 比较 C 风格字符串
+    int ret5 = str.compare("Hello, World!"); // 与整个字符串比较
+    cout << ret5 << endl;                     // 输出 0，说明相等
+
+    // 也可以只比较前 n 个字符
+    int ret6 = str.compare(0, 5, "Hello123", 5);
+    cout << ret6 << endl; // 输出 0，说明前 5 个字符都相同
+
+    return 0;
+}
+```
+
+注释：
+- `compare` 的返回值规则和字典序类似：
+  - 返回值 < 0：当前字符串小于目标字符串
+  - 返回值 == 0：两者相等
+  - 返回值 > 0：当前字符串大于目标字符串
+- 它会按字符逐个比较，遇到不同字符时，先比较对应字符的 ASCII 码值。
+- 如果前面内容相同但长度不同，较短的字符串会被认为更小。
+- 常见用法：比较用户名、版本号、文件名、关键词是否相等，或者判断大小关系。
+- 和 `==`、`!=` 不同，`compare` 还能直接告诉你“大于/等于/小于”的具体关系，适合做分支判断。
+
+### 3.1.7 字符串存取
+string中单个字符存储方式有两种
+char& operator[](int a); //通过[]方法进行取字符，传入下标a
+char& at()//通过at方法进行取字符，传入数组下标进行修改
+修改单个字符： 
+str[0] = x;//将字符串数组str中的第一个字符改为x
+str.at(1) = 'x'//将字符串数组str中的第二个字符改为x
+示例说明：
+
+在 C++ 的 `std::string` 中，访问或修改某个位置上的单个字符主要有两种方式：**下标运算符 `[]`** 和 **成员函数 `at()`**。两者都返回该位置字符的**引用**，因此既可以读取，也可以修改。
+
+---
+
+ 1. 基本语法
+
+```cpp
+char& operator[](size_t pos);   // 返回 pos 位置的字符引用（不检查边界）
+char& at(size_t pos);           // 返回 pos 位置的字符引用（检查边界，越界抛异常）
+```
+
+- 参数 `pos`：要访问的字符索引，从 0 开始。
+- 返回值：`char&`，即该字符的引用，可作左值（修改）。
+
+---
+
+ 2. 使用 `operator[]` 存取字符
+
+ 2.1 读取字符
+```cpp
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+    string str = "Hello";
+    // 读取第 0 个字符
+    char ch = str[0];        // 'H'
+    cout << "str[0] = " << ch << endl;
+
+    // 读取第 4 个字符
+    cout << "str[4] = " << str[4] << endl;  // 'o'
+
+    return 0;
+}
+```
+
+ 2.2 修改字符（通过引用）
+```cpp
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+    string str = "Hello";
+    // 修改第一个字符为 'x'
+    str[0] = 'x';
+    cout << str << endl;   // 输出 "xello"
+
+    // 修改最后一个字符为 '!'
+    str[4] = '!';
+    cout << str << endl;   // 输出 "xell!"
+
+    return 0;
+}
+```
+
+---
+
+ 3. 使用 `at()` 存取字符
+
+ 3.1 读取字符
+```cpp
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+    string str = "World";
+    // 读取第 1 个字符
+    char ch = str.at(1);    // 'o'
+    cout << "str.at(1) = " << ch << endl;
+
+    // 读取第 3 个字符
+    cout << "str.at(3) = " << str.at(3) << endl;  // 'l'
+
+    return 0;
+}
+```
+
+ 3.2 修改字符
+```cpp
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+    string str = "World";
+    // 将第二个字符改为 'a'
+    str.at(1) = 'a';
+    cout << str << endl;   // 输出 "Ward"
+
+    // 将最后一个字符改为 'y'
+    str.at(4) = 'y';
+    cout << str << endl;   // 输出 "Wardy"
+
+    return 0;
+}
+```
+
+---
+
+ 4. 关键区别：边界检查
+
+| 特性               | `operator[]`                     | `at()`                               |
+|-------------------|----------------------------------|--------------------------------------|
+| **边界检查**       | **不做**检查，越界导致**未定义行为**（可能崩溃或脏数据） | **会检查**，越界抛出 `std::out_of_range` 异常 |
+| **性能**           | 略快（无检查开销）                | 稍慢（有额外检查）                    |
+| **推荐使用场景**   | 确信索引在合法范围内时使用         | 需要安全访问，不确定索引时使用        |
+
+ 4.1 演示 `at()` 的异常捕获
+```cpp
+#include <iostream>
+#include <string>
+#include <stdexcept>   // for std::out_of_range
+using namespace std;
+
+int main() {
+    string str = "C++";
+    try {
+        // 尝试访问索引 10（超出长度 3）
+        char ch = str.at(10);
+        cout << "字符为：" << ch << endl;
+    } catch (const out_of_range& e) {
+        cerr << "捕获异常：" << e.what() << endl;
+    }
+    return 0;
+}
+```
+**输出示例**（具体错误信息因实现而异）：
+```
+捕获异常：basic_string::at: __n (which is 10) >= this->size() (which is 3)
+```
+
+ 4.2 演示 `operator[]` 越界（未定义行为）
+```cpp
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+    string str = "C++";
+    // 危险！索引 10 越界，程序可能崩溃或输出垃圾值
+    char ch = str[10];   // 未定义行为，不要这样做！
+    cout << "ch = " << ch << endl;   // 结果不可预测
+
+    // 更危险：越界写入可能破坏内存
+    str[10] = 'X';       // 绝对禁止！
+    return 0;
+}
+```
+> ⚠️ 编译运行此段代码可能没有明显错误，但这是危险的，属于**未定义行为**，应坚决避免。
+
+---
+
+ 5. 完整综合示例
+
+以下代码同时展示两种方式的读取和修改，并包含异常处理：
+
+```cpp
+#include <iostream>
+#include <string>
+#include <stdexcept>
+using namespace std;
+
+int main() {
+    string str = "AccessMe";
+
+    // ---- 使用 operator[] ----
+    cout << "=== operator[] ===" << endl;
+    cout << "原始字符串: " << str << endl;
+    // 读取
+    cout << "str[0] = " << str[0] << endl;
+    cout << "str[3] = " << str[3] << endl;
+    // 修改
+    str[0] = 'a';
+    str[7] = '?';   // 最后一个字符改为 '?'
+    cout << "修改后: " << str << endl;   // "accessM?"
+
+    // ---- 使用 at() ----
+    cout << "\n=== at() ===" << endl;
+    str = "Example";   // 重置
+    cout << "原始字符串: " << str << endl;
+    // 读取
+    cout << "str.at(1) = " << str.at(1) << endl;   // 'x'
+    // 修改
+    str.at(2) = 'm';
+    str.at(6) = '!';
+    cout << "修改后: " << str << endl;   // "Exmple!"
+
+    // ---- 展示 at() 的异常安全性 ----
+    cout << "\n=== 异常测试 ===" << endl;
+    try {
+        // 故意越界（索引 10 超出长度 7）
+        cout << "尝试访问 str.at(10) ..." << endl;
+        char c = str.at(10);
+        cout << "得到字符: " << c << endl;  // 不会执行到
+    } catch (const out_of_range& e) {
+        cerr << "越界异常: " << e.what() << endl;
+    }
+
+    return 0;
+}
+```
+
+**预期输出**：
+```
+=== operator[] ===
+原始字符串: AccessMe
+str[0] = A
+str[3] = e
+修改后: accessM?
+
+=== at() ===
+原始字符串: Example
+str.at(1) = x
+修改后: Exmple!
+
+=== 异常测试 ===
+尝试访问 str.at(10) ...
+越界异常: basic_string::at: __n (which is 10) >= this->size() (which is 7)
+```
+
+---
+
+### 6. 补充要点
+
+- **合法性前提**：无论使用哪种方式，索引 `pos` 都必须满足 `0 <= pos < str.size()`，否则 `operator[]` 导致未定义行为，`at()` 抛出异常。
+- **返回值类型**：返回的是 `char&`，所以可以直接赋值修改。如果只需要读取，也可以使用 `const char&` 或直接赋值给 `char` 变量。
+- **效率选择**：在循环或高频访问中，如果确信索引有效，优先用 `[]` 提高性能；在用户输入或外部数据传入的索引场景，推荐用 `at()` 保证安全。
+
+---
