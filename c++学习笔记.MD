@@ -7331,3 +7331,119 @@ int main() {
 | `erase(pos=0, len=npos)` | 删除 `[pos, pos+len)` 区间字符 | `*this` 引用 | `len` 默认删除至末尾；`pos` 越界抛异常 |
 
 这些函数为字符串编辑提供了极大的灵活性，在实际开发中常用于构造动态文本、解析数据或格式化输出。掌握它们能显著提升编码效率。
+
+## 3.1.9 字串获取
+
+### 功能描述
+从已有的字符串对象中提取出所需的子串（子序列），返回一个新的 `string` 对象，原字符串不受影响。
+
+### 函数原型
+```cpp
+string substr(size_t pos = 0, size_t count = npos) const;
+```
+- **`pos`**：起始位置（索引从 0 开始），默认为 0。
+- **`count`**：要提取的字符个数，默认为 `npos`（即 `string::npos`，表示“直到字符串末尾”）。
+- **返回值**：一个新构造的 `string` 对象，包含原字符串中从 `pos` 开始，长度为 `count` 的子串。
+
+> **注意**：如果 `pos` 超出了字符串长度（`pos > size()`），会抛出 `std::out_of_range` 异常；如果 `pos + count` 超过字符串长度，则实际提取到末尾为止（不会抛出异常）。
+
+---
+
+### 代码示例（基础用法）
+
+```cpp
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+    string str = "Hello, C++ World!";
+
+    // 1. 从索引 7 开始，提取 3 个字符
+    string sub1 = str.substr(7, 3);
+    cout << "sub1: \"" << sub1 << "\"" << endl;   // 输出: "C++"
+
+    // 2. 只指定起始位置，不指定长度 → 提取到末尾
+    string sub2 = str.substr(7);
+    cout << "sub2: \"" << sub2 << "\"" << endl;   // 输出: "C++ World!"
+
+    // 3. 使用默认参数（pos=0, count=npos）→ 复制整个字符串
+    string sub3 = str.substr();
+    cout << "sub3: \"" << sub3 << "\"" << endl;   // 输出: "Hello, C++ World!"
+
+    // 4. 提取长度超过剩余字符数 → 自动截断至末尾
+    string sub4 = str.substr(7, 100);
+    cout << "sub4: \"" << sub4 << "\"" << endl;   // 输出: "C++ World!"
+
+    return 0;
+}
+```
+
+---
+
+### 详细解释
+
+#### 1. 参数含义与边界行为
+- **`pos`** 必须小于等于 `size()`，否则抛出异常。例如 `str.substr(20)` 会因越界而终止程序（若未捕获异常）。
+- **`count`** 可以是任意非负整数，但如果 `pos + count` 大于 `size()`，则只提取到末尾，不会报错。这是 `substr` 设计上的一种宽容处理，方便提取后缀。
+
+#### 2. 时间复杂度
+`substr` 的时间复杂度为 **O(count)**，即提取的字符数。因为它需要为新字符串分配内存并逐字符拷贝。对于长字符串或频繁调用，需注意性能开销。
+
+#### 3. 异常安全性
+- 当 `pos > size()` 时，抛出 `std::out_of_range` 异常。
+- 其他情况下（包括 `count` 为 `npos` 或超出范围）不会抛出异常（强异常保证，分配内存失败时可能抛出 `bad_alloc`，但那是内存问题）。
+
+#### 4. 常见应用场景
+- **解析文件路径**：提取文件名或扩展名。
+- **处理用户输入**：按固定格式截取字段（如日期 `"2026-08-28"` 分别提取年、月、日）。
+- **字符串分割**：配合 `find` 等方法实现自定义分割逻辑。
+
+#### 5. 与 `assign` / `copy` 的区别
+- `substr` 返回一个新字符串（值语义），适合临时使用。
+- `assign` 是修改当前对象的内容，`copy` 则是将字符拷贝到外部字符数组，三者各有用途。
+
+---
+
+### 进阶示例：结合 `find` 提取子串
+
+```cpp
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+    string data = "name=John&age=30&city=NYC";
+
+    // 提取 "age" 对应的值
+    size_t pos_age = data.find("age=");
+    if (pos_age != string::npos) {
+        size_t start = pos_age + 4;          // 跳过 "age="
+        size_t end = data.find('&', start);  // 找到下一个 '&'
+        string age_str;
+        if (end != string::npos) {
+            age_str = data.substr(start, end - start);
+        } else {
+            age_str = data.substr(start);    // 直到末尾
+        }
+        cout << "age = " << age_str << endl; // 输出: 30
+    }
+
+    return 0;
+}
+```
+
+**解释**：  
+- 先使用 `find` 定位子串 `"age="` 的起始位置。
+- 计算值的起始索引，再用 `find` 找到分隔符 `'&'` 的位置。
+- 若找到分隔符，则用 `substr(start, end - start)` 提取中间部分；否则提取到字符串末尾。
+- 这种组合是字符串解析的经典范式。
+
+---
+
+### 注意事项
+- **索引类型**：`size_t` 是无符号类型，避免使用负数作为参数，否则会转为巨大正数，导致未定义行为或异常。
+- **返回值的生命周期**：`substr` 返回的是独立副本，修改子串不影响原字符串。
+- **C++11 起**，`substr` 也支持移动语义，返回时可以避免不必要的拷贝（依赖编译器的返回值优化）。
+
+通过灵活使用 `substr`，可以高效地完成各种字符串截取任务，但需时刻注意索引的合法性以及异常处理，以编写健壮的代码。
