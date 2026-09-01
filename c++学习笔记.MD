@@ -7664,3 +7664,108 @@ v4 (拷贝构造自v3): 100 100 100 100 100
 v5 (区间构造，拷贝source中间部分): 20 30 40 
 ```
 这些构造方式覆盖了日常开发中的绝大多数场景，您可以根据实际需求灵活选用。
+
+## 3.2.3 vector容器的赋值操作
+功能描述：给vertor容器进行赋值操作
+函数原型：
+vector& operator=(const vector& vec); //重载等号操作符
+assign (beg, end); //将(beg, end)区间中的数据拷贝赋值到本身
+assign (n, elem); //将n个elem拷贝赋值到本身
+示例代码：
+### 示例代码
+
+```cpp
+#include <iostream>
+#include <vector>   // 使用 vector 需要包含此头文件
+using namespace std;
+
+// 辅助函数：打印 vector 内容
+void printVector(const vector<int>& v) {
+    for (int val : v) {
+        cout << val << " ";
+    }
+    cout << endl;
+}
+
+int main() {
+    // 1. 构造一个初始 vector（源数据）
+    vector<int> src;
+    for (int i = 1; i <= 5; i++) {
+        src.push_back(i * 10);   // 10, 20, 30, 40, 50
+    }
+    cout << "源数据 src: ";
+    printVector(src);
+
+    // ------------------ 方式一：重载等号 operator= ------------------
+    vector<int> v1;
+    v1 = src;   // 将 src 的全部元素拷贝给 v1
+    cout << "v1 (operator=): ";
+    printVector(v1);
+
+    // ------------------ 方式二：assign(beg, end) ------------------
+    vector<int> v2;
+    // 将 src 中第 2 个到第 4 个元素（索引 1~3）赋值给 v2
+    // 注意：迭代器区间是 [begin+1, begin+4)，左闭右开
+    v2.assign(src.begin() + 1, src.begin() + 4);   // 20, 30, 40
+    cout << "v2 (assign区间): ";
+    printVector(v2);
+
+    // ------------------ 方式三：assign(n, elem) ------------------
+    vector<int> v3;
+    v3.assign(4, 100);   // 将 4 个值为 100 的元素赋值给 v3
+    cout << "v3 (assign n个elem): ";
+    printVector(v3);
+
+    // 额外演示：assign 会清空原有内容再重新填充
+    vector<int> v4 = {1, 2, 3};   // C++11 初始化列表
+    cout << "v4 原内容: ";
+    printVector(v4);
+    v4.assign(2, 88);    // 重新赋值为 2 个 88，原有内容被丢弃
+    cout << "v4 重新assign后: ";
+    printVector(v4);
+
+    return 0;
+}
+```
+
+---
+
+### 输出结果
+
+```
+源数据 src: 10 20 30 40 50 
+v1 (operator=): 10 20 30 40 50 
+v2 (assign区间): 20 30 40 
+v3 (assign n个elem): 100 100 100 100 
+v4 原内容: 1 2 3 
+v4 重新assign后: 88 88 
+```
+
+---
+
+### 详细解释
+
+| 函数原型 | 作用 | 特点 |
+|--------|------|------|
+| `vector& operator=(const vector& vec)` | 将另一个 vector 对象的**所有元素**拷贝给当前容器。 | 最常用的赋值方式，会**清空当前容器的原有内容**，然后拷贝新内容。 |
+| `assign(beg, end)` | 将迭代器区间 `[beg, end)` 中的元素**拷贝**到当前容器。 | 区间可以是任意容器的迭代器（不仅限于 vector），且会**替换**当前容器的全部内容。 |
+| `assign(n, elem)` | 将 **n 个值为 elem** 的元素赋值给当前容器。 | 快速生成相同元素的容器，同样会**清空**原有数据。 |
+
+#### 关键注意事项：
+- **三种方式都会清空容器原有的所有元素**，再填入新数据。
+- `operator=` 只能用于同类型的 vector（元素类型相同）。
+- `assign` 的迭代器版本可以接受任意容器的迭代器（如 `list`、`deque` 等），只要元素类型兼容。
+- `assign(n, elem)` 在需要批量填充固定值时非常高效。
+- 赋值操作执行的是**深拷贝**，新旧容器各自独立，互不影响。
+
+---
+
+### 扩展：与其他赋值方式的对比
+
+| 方式 | 示例 | 说明 |
+|------|------|------|
+| 构造函数 | `vector<int> v(src);` | 创建时直接拷贝 |
+| `swap` | `v1.swap(v2);` | 交换两个容器的内容（O(1)） |
+| 初始化列表 | `v = {1,2,3};` | C++11 支持，本质调用 `operator=` |
+
+实际开发中，根据场景选择合适的赋值方式即可。如果需要保留原数据，则使用拷贝构造或 `assign`；如果只是重新填充简单重复值，`assign(n, elem)` 最简洁。
